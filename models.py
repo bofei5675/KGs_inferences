@@ -114,7 +114,8 @@ class SpKBGATModified(nn.Module):
         # getting edge list
         edge_list = adj[0]
         edge_type = adj[1]
-
+        #print(train_indices_nhop.shape)
+        #print(train_indices_nhop[:, 3].unsqueeze(-1).shape, train_indices_nhop[:, 0].unsqueeze(-1).shape)
         edge_list_nhop = torch.cat(
             (train_indices_nhop[:, 3].unsqueeze(-1), train_indices_nhop[:, 0].unsqueeze(-1)), dim=1).t()
         edge_type_nhop = torch.cat(

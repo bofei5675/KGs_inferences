@@ -9,7 +9,7 @@ def read_entity_from_id(filename='./data/WN18RR/entity2id.txt'):
         for line in f:
             if len(line.strip().split()) > 1:
                 entity, entity_id = line.strip().split(
-                )[0].strip(), line.strip().split()[1].strip()
+                '\t')[0].strip(), line.strip().split('\t')[1].strip()
                 entity2id[entity] = int(entity_id)
     return entity2id
 
@@ -20,7 +20,7 @@ def read_relation_from_id(filename='./data/WN18RR/relation2id.txt'):
         for line in f:
             if len(line.strip().split()) > 1:
                 relation, relation_id = line.strip().split(
-                )[0].strip(), line.strip().split()[1].strip()
+                '\t')[0].strip(), line.strip().split('\t')[1].strip()
                 relation2id[relation] = int(relation_id)
     return relation2id
 
@@ -40,7 +40,7 @@ def init_embeddings(entity_file, relation_file):
 
 
 def parse_line(line):
-    line = line.strip().split()
+    line = line.strip().split('\t')
     e1, relation, e2 = line[0].strip(), line[1].strip(), line[2].strip()
     return e1, relation, e2
 
@@ -97,7 +97,8 @@ def build_data(path='./data/WN18RR/', is_unweigted=False, directed=True):
         os.path.join(path, 'valid.txt'), entity2id, relation2id, is_unweigted, directed)
     test_triples, test_adjacency_mat, unique_entities_test = load_data(os.path.join(
         path, 'test.txt'), entity2id, relation2id, is_unweigted, directed)
-
+    #print(entity2id)
+    #print(relation2id)
     id2entity = {v: k for k, v in entity2id.items()}
     id2relation = {v: k for k, v in relation2id.items()}
     left_entity, right_entity = {}, {}
@@ -123,6 +124,7 @@ def build_data(path='./data/WN18RR/', is_unweigted=False, directed=True):
         right_entity[relation2id[relation]][entity2id[e2]] += 1
 
     left_entity_avg = {}
+    #print(left_entity)
     for i in range(len(relation2id)):
         left_entity_avg[i] = sum(
             left_entity[i].values()) * 1.0 / len(left_entity[i])

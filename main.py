@@ -5,8 +5,8 @@ from torch.autograd import Variable
 import torch.nn as nn
 import torch.nn.functional as F
 import numpy as np
-import matplotlib.pyplot as plt
-from matplotlib.lines import Line2D
+#import matplotlib.pyplot as plt
+#from matplotlib.lines import Line2D
 from copy import deepcopy
 
 from preprocess import read_entity_from_id, read_relation_from_id, init_embeddings, build_data
@@ -24,6 +24,15 @@ import pickle
 # %%
 # %%from torchviz import make_dot, make_dot_from_trace
 
+def str2bool(v):
+    if isinstance(v, bool):
+       return v
+    if v.lower() in ('yes', 'true', 'True', 't', 'y', '1'):
+        return True
+    elif v.lower() in ('no', 'false', 'False', 'f', 'n', '0'):
+        return False
+    else:
+        raise argparse.ArgumentTypeError('Boolean value expected.')
 
 def parse_args():
     args = argparse.ArgumentParser()
@@ -31,19 +40,19 @@ def parse_args():
     args.add_argument("-data", "--data",
                       default="./data/WN18RR/", help="data directory")
     args.add_argument("-e_g", "--epochs_gat", type=int,
-                      default=3600, help="Number of epochs")
+                      default=1000, help="Number of epochs")
     args.add_argument("-e_c", "--epochs_conv", type=int,
-                      default=200, help="Number of epochs")
+                      default=100, help="Number of epochs")
     args.add_argument("-w_gat", "--weight_decay_gat", type=float,
                       default=5e-6, help="L2 reglarization for gat")
     args.add_argument("-w_conv", "--weight_decay_conv", type=float,
                       default=1e-5, help="L2 reglarization for conv")
-    args.add_argument("-pre_emb", "--pretrained_emb", type=bool,
-                      default=True, help="Use pretrained embeddings")
+    args.add_argument("-pre_emb", "--pretrained_emb", type=str2bool,
+                      default=False, help="Use pretrained embeddings")
     args.add_argument("-emb_size", "--embedding_size", type=int,
                       default=50, help="Size of embeddings (if pretrained not used)")
     args.add_argument("-l", "--lr", type=float, default=1e-3)
-    args.add_argument("-g2hop", "--get_2hop", type=bool, default=False)
+    args.add_argument("-g2hop", "--get_2hop", type=bool, default=True)
     args.add_argument("-u2hop", "--use_2hop", type=bool, default=True)
     args.add_argument("-p2hop", "--partial_2hop", type=bool, default=False)
     args.add_argument("-outfolder", "--output_folder",
@@ -83,11 +92,15 @@ def parse_args():
 
 args = parse_args()
 # %%
+print('Using pretrained:', args.pretrained_emb)
+
+if not os.path.exists(args.output_folder):
+    os.makedirs(args.output_folder)
 
 
 def load_data(args):
     train_data, validation_data, test_data, entity2id, relation2id, headTailSelector, unique_entities_train = build_data(
-        args.data, is_unweigted=False, directed=True)
+        args.data, is_unweigted=False, directed=False)
 
     if args.pretrained_emb:
         entity_embeddings, relation_embeddings = init_embeddings(os.path.join(args.data, 'entity2vec.txt'),
@@ -162,6 +175,12 @@ def batch_gat_loss(gat_loss_func, train_indices, entity_embed, relation_embed):
     return loss
 
 
+def write_to_file(args, line):
+    output_folder = args.output_folder
+    with open(output_folder + 'log.txt', 'a+') as f:
+        f.write(line + '\n')
+
+
 def train_gat(args):
 
     # Creating the gat model here.
@@ -185,7 +204,7 @@ def train_gat(args):
 
     gat_loss_func = nn.MarginRankingLoss(margin=args.margin)
 
-    current_batch_2hop_indices = torch.tensor([])
+    current_batch_2hop_indices = torch.tensor([], dtype=torch.long)
     if(args.use_2hop):
         current_batch_2hop_indices = Corpus_.get_batch_nhop_neighbors_all(args,
                                                                           Corpus_.unique_entities_train, node_neighbors_2hop)
@@ -246,12 +265,17 @@ def train_gat(args):
 
             end_time_iter = time.time()
 
-            print("Iteration-> {0}  , Iteration_time-> {1:.4f} , Iteration_loss {2:.4f}".format(
-                iters, end_time_iter - start_time_iter, loss.data.item()))
+            line = "Iteration-> {0}  , Iteration_time-> {1:.4f} , Iteration_loss {2:.4f}".format(
+                iters, end_time_iter - start_time_iter, loss.data.item())
+            print(line)
+            write_to_file(args, line)
 
         scheduler.step()
-        print("Epoch {} , average loss {} , epoch_time {}".format(
-            epoch, sum(epoch_loss) / len(epoch_loss), time.time() - start_time))
+        line = "Epoch {} , average loss {} , epoch_time {}".format(
+            epoch, sum(epoch_loss) / len(epoch_loss), time.time() - start_time)
+        print(line)
+        write_to_file(args, line)
+
         epoch_losses.append(sum(epoch_loss) / len(epoch_loss))
 
         save_model(model_gat, args.data, epoch,
@@ -337,14 +361,17 @@ def train_conv(args):
             epoch_loss.append(loss.data.item())
 
             end_time_iter = time.time()
-
-            print("Iteration-> {0}  , Iteration_time-> {1:.4f} , Iteration_loss {2:.4f}".format(
-                iters, end_time_iter - start_time_iter, loss.data.item()))
+            line = "Iteration-> {0}  , Iteration_time-> {1:.4f} , Iteration_loss {2:.4f}".format(
+                iters, end_time_iter - start_time_iter, loss.data.item())
+            print(line)
+            write_to_file(args, line)
 
         scheduler.step()
-        print("Epoch {} , average loss {} , epoch_time {}".format(
-            epoch, sum(epoch_loss) / len(epoch_loss), time.time() - start_time))
+        line = "Epoch {} , average loss {} , epoch_time {}".format(
+            epoch, sum(epoch_loss) / len(epoch_loss), time.time() - start_time)
         epoch_losses.append(sum(epoch_loss) / len(epoch_loss))
+        print(line)
+        write_to_file(args, line)
 
         save_model(model_conv, args.data, epoch,
                    args.output_folder + "conv/")

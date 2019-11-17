@@ -1,0 +1,146 @@
+The risk or severity of adverse effects can be increased when _ is combined with _ axetil.	0
+The risk or severity of bleeding and gastrointestinal bleeding can be increased when _ is combined with _.	1
+The risk or severity of adverse effects can be increased when _ is combined with _ zirconium Zr-89.	2
+The risk or severity of hypotension can be increased when _ is combined with _.	3
+The therapeutic efficacy of _ can be decreased when used in combination with _.	4
+The risk or severity of pseudotumor cerebri and elevated intracranial pressure can be increased when _ is combined with _.	5
+The risk or severity of bleeding and bruising can be increased when _ is combined with _.	6
+_ may increase the neuroexcitatory activities of _.	7
+_ may increase the QTc-prolonging activities of _.	8
+The risk or severity of liver damage can be increased when _ is combined with _.	9
+The risk or severity of myopathy and rhabdomyolysis can be increased when _ is combined with _.	10
+_ may decrease the excretion rate of _ undecanoate which could result in a higher serum level.	11
+The risk or severity of bleeding and hemorrhage can be increased when Sodium Citrate is combined with _.	12
+The risk or severity of QTc prolongation can be increased when _ is combined with _.	13
+The metabolism of _ can be increased when combined with _ acetate.	14
+The risk or severity of bleeding can be increased when _ is combined with _ ethyl.	15
+The risk or severity of bleeding can be increased when _ is combined with Sodium Citrate.	16
+The risk or severity of hypoglycemia can be increased when _ is combined with _.	17
+The risk or severity of adverse effects can be increased when _ mafodotin is combined with _.	18
+The serum concentration of _ can be increased when it is combined with _.	19
+The metabolism of _ cypionate can be increased when combined with _.	20
+_ may increase the antiplatelet activities of _.	21
+The risk or severity of hypertension can be increased when _ is combined with _.	22
+The serum concentration of _ acetate can be increased when it is combined with _.	23
+_ may increase the hyperkalemic activities of _.	24
+The risk or severity of bleeding can be increased when _ is combined with _.	25
+_ etexilate may increase the anticoagulant activities of _.	26
+The risk or severity of cardiotoxicity can be increased when _ is combined with _.	27
+_ may increase the serotonergic activities of _.	28
+_ may increase the anticholinergic activities of _.	29
+The risk or severity of infection can be increased when _ is combined with _.	30
+_ may decrease the excretion rate of _ which could result in a higher serum level.	31
+_ may increase the sedative activities of _.	32
+The risk or severity of congestive heart failure and hypotension can be increased when _ is combined with _.	33
+The risk or severity of bleeding and hemorrhage can be increased when _ is combined with Sodium Citrate.	34
+The risk or severity of adverse effects can be increased when _ is combined with Sodium Citrate.	35
+The risk or severity of adverse effects can be increased when _ is combined with _.	36
+_ may increase the myopathic rhabdomyolysis activities of _.	37
+_ may increase the orthostatic hypotensive and hypotensive activities of _.	38
+The therapeutic efficacy of Sodium Citrate can be increased when used in combination with _.	39
+The serum concentration of the active metabolites of _ can be reduced when _ is used in combination with _ resulting in a loss in efficacy.	40
+The risk or severity of hyperkalemia can be increased when _ is combined with _.	41
+The risk or severity of Cardiac Arrhythmia can be increased when _ is combined with _.	42
+The metabolism of _ can be decreased when combined with _ caproate.	43
+_ may increase the hypotensive and vasodilatory activities of _.	44
+_ may increase the hypoglycemic activities of _.	45
+_ may increase the bradycardic activities of _.	46
+_ may increase the tachycardic activities of _.	47
+The risk or severity of bleeding can be increased when Sodium Citrate is combined with _.	48
+The therapeutic efficacy of Sodium Citrate can be decreased when used in combination with _.	49
+The risk or severity of gastrointestinal bleeding and gastrointestinal ulceration can be increased when _ is combined with _.	50
+_ may decrease the excretion rate of _ cypionate which could result in a higher serum level.	51
+The risk or severity of adverse effects can be increased when _con-1 is combined with _.	52
+The risk or severity of adverse effects can be increased when _-2b is combined with _.	53
+The risk or severity of hypotension and CNS depression can be increased when _ is combined with _.	54
+_ may increase the excretion rate of _ which could result in a lower serum level and potentially a reduction in efficacy.	55
+The risk or severity of hemorrhage can be increased when _ is combined with _.	56
+The risk or severity of bleeding and hemorrhage can be increased when _ is combined with _.	57
+_ may increase the myelosuppressive activities of _.	58
+The risk or severity of respiratory depression can be increased when _ is combined with _.	59
+The risk or severity of pulmonary toxicity can be increased when _ is combined with _.	60
+The serum concentration of the active metabolites of _ can be increased when _ is used in combination with _.	61
+The risk or severity of adverse effects can be increased when _-n1 is combined with _.	62
+_ may decrease the antiplatelet activities of _.	63
+The excretion of _ can be decreased when combined with _.	64
+The serum concentration of _ can be decreased when it is combined with _.	65
+_ may increase the neuromuscular blocking activities of _.	66
+The risk or severity of angioedema can be increased when _ is combined with _.	67
+The protein binding of _ can be decreased when combined with _.	68
+_ may increase the arrhythmogenic activities of _.	69
+The risk or severity of bleeding, nephrotoxicity, and gastrointestinal bleeding can be increased when _ is combined with _.	70
+The risk or severity of bronchospasm, shortness of breath, and dyspnea can be increased when _ is combined with _.	71
+_ may increase the hypotensive activities of _.	72
+_ may decrease the antihypertensive activities of _.	73
+The risk or severity of methemoglobinemia can be increased when _ is combined with _.	74
+The excretion of _ can be increased when combined with _.	75
+The therapeutic efficacy of _ can be decreased when used in combination with Sodium Citrate.	76
+_ may increase the neurotoxic activities of _.	77
+The risk or severity of gastrointestinal bleeding and thrombocytopenia can be increased when _ is combined with _.	78
+The risk or severity of hypokalemia can be increased when _ is combined with _.	79
+The risk or severity of gastrointestinal bleeding can be increased when Sodium Citrate is combined with _.	80
+_ may increase the nephrotoxic activities of _.	81
+The metabolism of _ can be increased when combined with _.	82
+The risk or severity of adverse effects can be increased when _-n3 is combined with _.	83
+_ may decrease the anticoagulant activities of _.	84
+The risk or severity of congestive heart failure, bleeding, hypotension, and Tachycardia can be increased when _ is combined with _.	85
+The serum concentration of _ propionate can be increased when it is combined with _.	86
+The risk or severity of gastrointestinal irritation can be increased when _ is combined with _.	87
+_ may increase the hypertensive activities of _.	88
+The risk or severity of adverse effects can be increased when _ is combined with _ emtansine.	89
+The risk or severity of myopathy, rhabdomyolysis, and myoglobinuria can be increased when _ is combined with _.	90
+_ may decrease the sedative and stimulatory activities of _.	91
+_ may increase the orthostatic hypotensive activities of _.	92
+_ can cause a decrease in the absorption of _ resulting in a reduced serum concentration and potentially a decrease in efficacy.	93
+_ may increase the antiplatelet activities of Sodium Citrate.	94
+The risk or severity of Tachycardia can be increased when _ is combined with _.	95
+The risk or severity of orthostatic hypotension can be increased when _ is combined with _.	96
+_ may increase the thrombogenic activities of _.	97
+The risk or severity of leukopenia can be increased when _ is combined with _.	98
+The risk or severity of adverse effects can be increased when Sodium Citrate is combined with _.	99
+_ may increase the immunosuppressive activities of _.	100
+The therapeutic efficacy of _ can be increased when used in combination with _.	101
+The metabolism of _ benzoate can be increased when combined with _.	102
+The risk or severity of constipation can be increased when _ is combined with _.	103
+The risk or severity of gastrointestinal bleeding and peptic ulcer can be increased when _ is combined with _.	104
+The risk or severity of torsade de pointes and Cardiac Arrhythmia can be increased when _ is combined with _.	105
+_ may increase the anticoagulant activities of _.	106
+The metabolism of _ enanthate can be increased when combined with _.	107
+Sodium Citrate may increase the anticoagulant activities of _.	108
+_ may decrease the anticoagulant activities of Sodium Citrate.	109
+The risk or severity of myelosuppression can be increased when _ is combined with _.	110
+_ may increase the hepatotoxic activities of _.	111
+The risk or severity of gastrointestinal bleeding can be increased when _ is combined with _.	112
+_ may increase the cardiotoxic activities of _.	113
+The risk or severity of CNS depression can be increased when _ is combined with _.	114
+The serum concentration of 5-amino-imidazole-4-carboxamide (AIC), an active metabolite of _, can be increased when used in combination with _.	115
+The risk or severity of serotonin syndrome can be increased when _ is combined with _.	116
+_ may increase the anticoagulant activities of Sodium Citrate.	117
+The risk or severity of QTc prolongation can be decreased when _ is combined with _.	118
+_ may increase the antihypertensive activities of _.	119
+The risk or severity of bradycardia can be increased when _ is combined with _.	120
+The risk or severity of neuromuscular blockade can be increased when _ is combined with _.	121
+The risk or severity of liver enzyme elevations can be increased when _ is combined with _.	122
+The risk or severity of hypercoagulability can be increased when _ is combined with _.	123
+The risk or severity of Thrombosis can be increased when _ is combined with _.	124
+The risk or severity of serotonin syndrome and seizure can be increased when _ is combined with _.	125
+The risk or severity of nephrotoxicity can be increased when _ is combined with _.	126
+_ can cause an increase in the absorption of _ resulting in an increased serum concentration and potentially a worsening of adverse effects.	127
+The risk or severity of renal failure can be increased when _ is combined with _.	128
+The absorption of _ can be decreased when combined with _.	129
+The metabolism of _ acetate can be decreased when combined with _.	130
+The risk or severity of renal failure, hyperkalemia, and hypertension can be increased when _ is combined with _.	131
+The risk or severity of adverse effects can be decreased when _ is combined with _.	132
+The risk or severity of hemorrhage can be increased when _ is combined with Sodium Citrate.	133
+The risk or severity of hypotension, dyspepsia, and headache can be increased when _ is combined with _.	134
+The metabolism of _ valerate can be increased when combined with _.	135
+The risk or severity of bleeding and bruising can be increased when Sodium Citrate is combined with _.	136
+The risk or severity of infection and neutropenia can be increased when _ is combined with _.	137
+The risk or severity of orthostatic hypotension and syncope can be increased when _ is combined with _.	138
+_ may decrease the hypertensive activities of _.	139
+The risk or severity of Tachycardia and drowsiness can be increased when _ is combined with _.	140
+The metabolism of (S)-_ can be increased when combined with _.	141
+The metabolism of _ can be decreased when combined with _.	142
+The risk or severity of neutropenia can be increased when _ is combined with _.	143
+_ may increase the central nervous system depressant (CNS depressant) activities of _.	144
+_ may decrease effectiveness of _ as a diagnostic agent.	145

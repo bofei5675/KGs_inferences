@@ -1,0 +1,526 @@
+DB00078	_ may increase the thrombogenic activities of _.	DB07931
+DB00812	The risk or severity of adverse effects can be increased when _ is combined with _.	DB01419
+DB00573	The risk or severity of adverse effects can be increased when _ is combined with _.	DB00159
+DB00712	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB06695
+DB06605	_ may increase the anticoagulant activities of _.	DB00013
+DB00013	The risk or severity of bleeding and hemorrhage can be increased when _ is combined with _.	DB00533
+DB01435	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB01181
+DB00461	The metabolism of _ can be decreased when combined with _.	DB00675
+DB13143	_ may increase the thrombogenic activities of _.	DB00580
+DB09030	The risk or severity of bleeding can be increased when _ is combined with _.	DB00991
+DB09317	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB00554
+DB06206	The risk or severity of bleeding and hemorrhage can be increased when _ is combined with _.	DB09075
+DB01009	The risk or severity of bleeding and hemorrhage can be increased when _ is combined with _.	DB00013
+DB00328	The risk or severity of bleeding and hemorrhage can be increased when _ is combined with _.	DB00001
+DB00675	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB00788
+DB13956	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB00788
+DB00686	_ may decrease the anticoagulant activities of _.	DB13956
+DB00812	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB00583
+DB00001	_ may decrease the anticoagulant activities of _.	DB11674
+DB04348	The serum concentration of _ can be increased when it is combined with _.	DB00286
+DB04573	_ may decrease the anticoagulant activities of _.	DB06605
+DB01399	The risk or severity of adverse effects can be increased when _ is combined with _.	DB01009
+DB11622	The risk or severity of bleeding and bruising can be increased when _ is combined with _.	DB00686
+DB11674	_ may decrease the anticoagulant activities of _.	DB00001
+DB02659	The risk or severity of adverse effects can be increased when _ is combined with _.	DB00806
+DB00821	The risk or severity of adverse effects can be increased when _ is combined with _.	DB00712
+DB00255	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB00977
+DB01399	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB00908
+DB00469	The risk or severity of adverse effects can be increased when _ is combined with _.	DB00482
+DB00482	The metabolism of _ can be decreased when combined with _.	DB13956
+DB00328	The metabolism of _ can be increased when combined with _.	DB00932
+DB01009	The risk or severity of adverse effects can be increased when _ is combined with _.	DB01283
+DB09030	_ may decrease the anticoagulant activities of _.	DB09381
+DB01009	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB06695
+DB01401	The risk or severity of adverse effects can be increased when _ is combined with _.	DB01600
+DB00686	The risk or severity of bleeding and hemorrhage can be increased when _ is combined with _.	DB00048
+DB00048	The risk or severity of bleeding and hemorrhage can be increased when _ is combined with _.	DB00013
+DB00675	The metabolism of _ can be decreased when combined with _.	DB00814
+DB00977	The metabolism of _ can be increased when combined with _.	DB00788
+DB13956	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB01009
+DB00328	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB00675
+DB09318	The metabolism of _ can be decreased when combined with _.	DB06777
+DB04574	The therapeutic efficacy of _ can be decreased when used in combination with _.	DB00468
+DB00991	The risk or severity of adverse effects can be increased when _ is combined with _.	DB00821
+DB00814	The metabolism of _ can be decreased when combined with _.	DB01357
+DB13954	The metabolism of _ can be increased when combined with _.	DB00932
+DB08834	The risk or severity of bleeding and bruising can be increased when _ is combined with _.	DB00686
+DB13952	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB00749
+DB06695	The risk or severity of bleeding and bruising can be increased when _ is combined with _.	DB06777
+DB00500	The risk or severity of adverse effects can be increased when _ is combined with _.	DB00605
+DB09079	The risk or severity of bleeding can be increased when _ is combined with _.	DB00686
+DB00812	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB09318
+DB00533	The risk or severity of adverse effects can be increased when _ is combined with _.	DB00712
+DB00163	The metabolism of _ can be increased when combined with _.	DB00977
+DB01283	_ may increase the thrombogenic activities of _.	DB11674
+DB09318	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB00159
+DB00465	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB09075
+DB00814	The risk or severity of bleeding and hemorrhage can be increased when _ is combined with _.	DB00001
+DB01424	The metabolism of _ can be decreased when combined with _.	DB05990
+DB09381	_ may increase the thrombogenic activities of _.	DB01283
+DB01397	The risk or severity of adverse effects can be increased when _ is combined with _.	DB00580
+DB00908	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB00605
+DB00784	The metabolism of _ can be decreased when combined with _.	DB00255
+DB09075	The risk or severity of bleeding can be increased when _ is combined with _.	DB06228
+DB01435	The metabolism of _ can be decreased when combined with _.	DB05990
+DB00001	The risk or severity of bleeding and bruising can be increased when _ is combined with _.	DB05990
+DB01357	_ may increase the thrombogenic activities of _.	DB00461
+DB05990	The metabolism of _ can be decreased when combined with _.	DB00468
+DB13952	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB00812
+DB09211	The therapeutic efficacy of _ can be decreased when used in combination with _.	DB00533
+DB00908	The metabolism of _ can be decreased when combined with _.	DB01586
+DB00328	The risk or severity of adverse effects can be increased when _ is combined with _.	DB00605
+DB00977	The serum concentration of _ can be increased when it is combined with _.	DB01254
+DB00712	The risk or severity of adverse effects can be increased when _ is combined with _.	DB00554
+DB08833	The risk or severity of bleeding and bruising can be increased when _ is combined with _.	DB00686
+DB01283	The risk or severity of bleeding and hemorrhage can be increased when _ is combined with _.	DB00686
+DB01357	The metabolism of _ can be decreased when combined with _.	DB00255
+DB09318	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB01419
+DB00328	The risk or severity of adverse effects can be increased when _ is combined with _.	DB01600
+DB00465	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB00908
+DB11789	The risk or severity of bleeding and bruising can be increased when _ is combined with _.	DB06605
+DB00675	The metabolism of _ can be increased when combined with _.	DB01254
+DB00586	The risk or severity of adverse effects can be increased when _ is combined with _.	DB00749
+DB00788	The risk or severity of adverse effects can be increased when _ is combined with _.	DB00159
+DB01628	The risk or severity of bleeding and hemorrhage can be increased when _ is combined with _.	DB00001
+DB08935	The risk or severity of bleeding and hemorrhage can be increased when _ is combined with _.	DB06605
+DB01399	The risk or severity of bleeding can be increased when _ is combined with _.	DB00806
+DB00533	The therapeutic efficacy of _ can be decreased when used in combination with _.	DB09211
+DB01609	The serum concentration of _ can be increased when it is combined with _.	DB13954
+DB13954	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB00580
+DB09075	The serum concentration of _ can be increased when it is combined with _.	DB00586
+DB01419	The risk or severity of adverse effects can be increased when _ is combined with _.	DB00159
+DB00461	The risk or severity of adverse effects can be increased when _ is combined with _.	DB00482
+DB00788	The serum concentration of _ can be increased when it is combined with _.	DB00539
+DB06695	_ may increase the anticoagulant activities of _.	DB00001
+DB02659	The risk or severity of bleeding and bruising can be increased when _ is combined with _.	DB06695
+DB00788	The risk or severity of adverse effects can be increased when _ is combined with _.	DB00533
+DB00482	_ may increase the excretion rate of _ which could result in a lower serum level and potentially a reduction in efficacy.	DB04348
+DB00821	The risk or severity of adverse effects can be increased when _ is combined with _.	DB00991
+DB02224	The risk or severity of adverse effects can be increased when _ is combined with _.	DB00573
+DB09030	_ may increase the anticoagulant activities of _.	DB00013
+DB09317	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB00939
+DB00533	The metabolism of _ can be increased when combined with _.	DB00255
+DB01397	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB00908
+DB13953	The metabolism of _ can be decreased when combined with _.	DB00788
+DB01399	The risk or severity of adverse effects can be increased when _ is combined with _.	DB00812
+DB02659	_ can cause a decrease in the absorption of _ resulting in a reduced serum concentration and potentially a decrease in efficacy.	DB01397
+DB06695	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB00159
+DB01254	The metabolism of _ can be increased when combined with _.	DB13953
+DB00788	The risk or severity of adverse effects can be increased when _ is combined with _.	DB01424
+DB00286	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB00991
+DB00583	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB13954
+DB00784	The metabolism of _ can be decreased when combined with _.	DB01357
+DB15334	_ may increase the thrombogenic activities of _.	DB00461
+DB09075	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB01009
+DB00328	The serum concentration of _ can be increased when it is combined with _.	DB00255
+DB00908	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB01628
+DB00286	The metabolism of _ can be decreased when combined with _.	DB00908
+DB01009	The risk or severity of adverse effects can be increased when _ is combined with _.	DB00991
+DB09317	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB01399
+DB01397	_ can cause a decrease in the absorption of _ resulting in a reduced serum concentration and potentially a decrease in efficacy.	DB08834
+DB00001	_ may increase the anticoagulant activities of _.	DB09070
+DB01381	The metabolism of _ can be decreased when combined with _.	DB01283
+DB00580	_ may increase the thrombogenic activities of _.	DB00977
+DB00806	The risk or severity of bleeding can be increased when _ is combined with _.	DB01009
+DB06228	The risk or severity of bleeding and hemorrhage can be increased when _ is combined with _.	DB01254
+DB00939	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB04574
+DB00712	The risk or severity of adverse effects can be increased when _ is combined with _.	DB01283
+DB01628	The risk or severity of adverse effects can be increased when _ is combined with _.	DB00580
+DB02224	The risk or severity of bleeding can be increased when _ is combined with _.	DB00806
+DB00269	_ may decrease the anticoagulant activities of _.	DB00686
+DB09075	The risk or severity of bleeding and bruising can be increased when _ is combined with _.	DB02691
+DB09318	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB01435
+DB06777	_ can cause a decrease in the absorption of _ resulting in a reduced serum concentration and potentially a decrease in efficacy.	DB01397
+DB01397	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB09075
+DB06228	_ may increase the anticoagulant activities of _.	DB00001
+DB00788	The risk or severity of gastrointestinal bleeding and peptic ulcer can be increased when _ is combined with _.	DB01609
+DB00001	The risk or severity of bleeding and hemorrhage can be increased when _ is combined with _.	DB00932
+DB06206	The risk or severity of bleeding and hemorrhage can be increased when _ is combined with _.	DB09030
+DB00078	_ may increase the thrombogenic activities of _.	DB15334
+DB06777	The metabolism of _ can be decreased when combined with _.	DB01435
+DB00255	_ may increase the thrombogenic activities of _.	DB00078
+DB09318	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB01397
+DB01381	The metabolism of _ can be decreased when combined with _.	DB01424
+DB00712	The risk or severity of adverse effects can be increased when _ is combined with _.	DB00461
+DB00812	The metabolism of _ can be increased when combined with _.	DB09053
+DB00554	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB09317
+DB01419	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB13956
+DB09317	The metabolism of _ can be decreased when combined with _.	DB09381
+DB09075	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB00605
+DB00783	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB00814
+DB01254	The metabolism of _ can be increased when combined with _.	DB00812
+DB00583	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB00814
+DB01009	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB09318
+DB01381	The metabolism of _ can be decreased when combined with _.	DB00554
+DB08935	_ may increase the thrombogenic activities of _.	DB13418
+DB01381	The metabolism of _ can be decreased when combined with _.	DB00533
+DB00821	The risk or severity of adverse effects can be increased when _ is combined with _.	DB01283
+DB00255	_ may decrease the anticoagulant activities of _.	DB09030
+DB01435	The risk or severity of adverse effects can be increased when _ is combined with _.	DB00482
+DB06605	The metabolism of _ can be decreased when combined with _.	DB01435
+DB00001	The risk or severity of bleeding and hemorrhage can be increased when _ is combined with _.	DB01628
+DB00573	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB09317
+DB00573	The risk or severity of adverse effects can be increased when _ is combined with _.	DB00554
+DB00159	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB00908
+DB00159	The risk or severity of adverse effects can be increased when _ is combined with _.	DB01424
+DB15334	_ may decrease the anticoagulant activities of _.	DB00013
+DB00255	The metabolism of _ can be increased when combined with _.	DB00163
+DB01283	The risk or severity of adverse effects can be increased when _ is combined with _.	DB01397
+DB00686	The risk or severity of bleeding and bruising can be increased when _ is combined with _.	DB01586
+DB09075	The serum concentration of _ can be increased when it is combined with _.	DB00788
+DB00573	The risk or severity of adverse effects can be increased when _ is combined with _.	DB01628
+DB00533	The risk or severity of adverse effects can be increased when _ is combined with _.	DB01399
+DB00500	The risk or severity of adverse effects can be increased when _ is combined with _.	DB00814
+DB00328	The risk or severity of gastrointestinal bleeding and peptic ulcer can be increased when _ is combined with _.	DB01609
+DB00686	_ may decrease the anticoagulant activities of _.	DB13418
+DB09317	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB00991
+DB02224	The risk or severity of adverse effects can be increased when _ is combined with _.	DB00580
+DB00814	The risk or severity of adverse effects can be increased when _ is combined with _.	DB02224
+DB00255	_ may decrease the anticoagulant activities of _.	DB09075
+DB00814	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB01181
+DB06777	The metabolism of _ can be decreased when combined with _.	DB00712
+DB00580	_ may increase the thrombogenic activities of _.	DB11478
+DB01628	The risk or severity of adverse effects can be increased when _ is combined with _.	DB01397
+DB00788	The metabolism of _ can be decreased when combined with _.	DB13953
+DB00788	The serum concentration of _ can be increased when it is combined with _.	DB04573
+DB00814	_ may increase the thrombogenic activities of _.	DB13418
+DB00554	The metabolism of _ can be decreased when combined with _.	DB01357
+DB11478	_ may increase the thrombogenic activities of _.	DB01283
+DB00788	The metabolism of _ can be decreased when combined with _.	DB01357
+DB00554	The risk or severity of bleeding and hemorrhage can be increased when _ is combined with _.	DB00013
+DB00784	The risk or severity of adverse effects can be increased when _ is combined with _.	DB00554
+DB03619	_ can cause a decrease in the absorption of _ resulting in a reduced serum concentration and potentially a decrease in efficacy.	DB01397
+DB09381	_ may increase the thrombogenic activities of _.	DB01628
+DB00605	The risk or severity of bleeding and hemorrhage can be increased when _ is combined with _.	DB00001
+DB00573	The risk or severity of adverse effects can be increased when _ is combined with _.	DB00605
+DB09317	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB09318
+DB00675	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB13954
+DB01283	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB06695
+DB00580	The risk or severity of adverse effects can be increased when _ is combined with _.	DB00461
+DB09318	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB00286
+DB00686	_ may decrease the anticoagulant activities of _.	DB07931
+DB11478	_ may decrease the anticoagulant activities of _.	DB00686
+DB09211	The risk or severity of adverse effects can be increased when _ is combined with _.	DB06605
+DB04348	The risk or severity of adverse effects can be increased when _ is combined with _.	DB09030
+DB00806	The risk or severity of adverse effects can be increased when _ is combined with _.	DB08834
+DB00159	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB09317
+DB00533	The metabolism of _ can be decreased when combined with _.	DB04574
+DB00932	The metabolism of _ can be increased when combined with _.	DB13956
+DB06695	The risk or severity of bleeding and hemorrhage can be increased when _ is combined with _.	DB00048
+DB01424	The metabolism of _ can be decreased when combined with _.	DB01357
+DB00712	The excretion of _ can be decreased when combined with _.	DB04348
+DB00788	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB02123
+DB00783	_ may decrease the anticoagulant activities of _.	DB06695
+DB00586	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB09318
+DB13954	The metabolism of _ can be increased when combined with _.	DB01357
+DB04574	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB00812
+DB12487	_ may decrease the anticoagulant activities of _.	DB00686
+DB00286	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB00465
+DB00932	The risk or severity of torsade de pointes and Cardiac Arrhythmia can be increased when _ is combined with _.	DB00468
+DB01435	The risk or severity of bleeding can be increased when _ is combined with _.	DB09030
+DB01600	The risk or severity of adverse effects can be increased when _ is combined with _.	DB00573
+DB00812	The risk or severity of adverse effects can be increased when _ is combined with _.	DB00814
+DB00977	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB00482
+DB06605	The risk or severity of bleeding and hemorrhage can be increased when _ is combined with _.	DB00573
+DB06605	The risk or severity of bleeding and bruising can be increased when _ is combined with _.	DB06777
+DB01399	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB00583
+DB00001	The risk or severity of bleeding and bruising can be increased when _ is combined with _.	DB02123
+DB00468	The serum concentration of _ can be increased when it is combined with _.	DB13953
+DB09211	The therapeutic efficacy of _ can be decreased when used in combination with _.	DB01401
+DB06228	_ may increase the anticoagulant activities of _.	DB09070
+DB04348	The excretion of _ can be decreased when combined with _.	DB01424
+DB00533	The risk or severity of adverse effects can be increased when _ is combined with _.	DB01424
+DB09030	_ may decrease the anticoagulant activities of _.	DB13386
+DB09075	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB00533
+DB06605	The therapeutic efficacy of _ can be increased when used in combination with _.	DB00468
+DB00500	The risk or severity of adverse effects can be increased when _ is combined with _.	DB01283
+DB00078	_ may increase the thrombogenic activities of _.	DB01357
+DB00468	The serum concentration of _ can be increased when it is combined with _.	DB09075
+DB01628	_ may increase the thrombogenic activities of _.	DB04575
+DB01435	The metabolism of _ can be decreased when combined with _.	DB06777
+DB11674	_ may increase the thrombogenic activities of _.	DB00821
+DB00001	_ may decrease the anticoagulant activities of _.	DB00269
+DB03619	_ may increase the excretion rate of _ which could result in a lower serum level and potentially a reduction in efficacy.	DB01586
+DB00533	_ may increase the thrombogenic activities of _.	DB07931
+DB13952	_ may decrease the anticoagulant activities of _.	DB09030
+DB09030	The risk or severity of bleeding and hemorrhage can be increased when _ is combined with _.	DB09053
+DB13956	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB00465
+DB01399	The risk or severity of gastrointestinal bleeding and peptic ulcer can be increased when _ is combined with _.	DB01609
+DB09318	_ may decrease the anticoagulant activities of _.	DB06695
+DB01397	The risk or severity of adverse effects can be increased when _ is combined with _.	DB00328
+DB06228	The risk or severity of bleeding and bruising can be increased when _ is combined with _.	DB08857
+DB00078	The risk or severity of bleeding and hemorrhage can be increased when _ is combined with _.	DB09030
+DB06777	The metabolism of _ can be decreased when combined with _.	DB09079
+DB01357	_ may decrease the anticoagulant activities of _.	DB09075
+DB06605	The risk or severity of bleeding and hemorrhage can be increased when _ is combined with _.	DB00159
+DB06228	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB00939
+DB00686	_ may decrease the anticoagulant activities of _.	DB00286
+DB00465	The risk or severity of adverse effects can be increased when _ is combined with _.	DB00605
+DB00482	The risk or severity of gastrointestinal bleeding and peptic ulcer can be increased when _ is combined with _.	DB01609
+DB09079	The serum concentration of _ can be decreased when it is combined with _.	DB04573
+DB00539	The metabolism of _ can be decreased when combined with _.	DB00580
+DB09030	_ may decrease the anticoagulant activities of _.	DB15335
+DB04348	The excretion of _ can be decreased when combined with _.	DB00500
+DB01397	The risk or severity of bleeding and hemorrhage can be increased when _ is combined with _.	DB00013
+DB01397	_ can cause a decrease in the absorption of _ resulting in a reduced serum concentration and potentially a decrease in efficacy.	DB03619
+DB06228	_ may decrease the anticoagulant activities of _.	DB04575
+DB13954	The serum concentration of _ can be increased when it is combined with _.	DB00468
+DB09317	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB01435
+DB00013	The risk or severity of bleeding and hemorrhage can be increased when _ is combined with _.	DB00712
+DB00814	_ may increase the thrombogenic activities of _.	DB09070
+DB00269	_ may increase the thrombogenic activities of _.	DB00749
+DB01609	The risk or severity of gastrointestinal bleeding and peptic ulcer can be increased when _ is combined with _.	DB00482
+DB00939	The risk or severity of bleeding and hemorrhage can be increased when _ is combined with _.	DB00001
+DB01009	The risk or severity of adverse effects can be increased when _ is combined with _.	DB01435
+DB00783	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB01600
+DB09317	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB01009
+DB00749	The risk or severity of adverse effects can be increased when _ is combined with _.	DB00939
+DB06228	The risk or severity of bleeding and bruising can be increased when _ is combined with _.	DB06777
+DB00465	The risk or severity of adverse effects can be increased when _ is combined with _.	DB00469
+DB07931	_ may decrease the anticoagulant activities of _.	DB00686
+DB09030	The risk or severity of adverse effects can be increased when _ is combined with _.	DB11622
+DB01009	The metabolism of _ can be decreased when combined with _.	DB06605
+DB00580	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB01181
+DB13952	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB01424
+DB09317	The metabolism of _ can be decreased when combined with _.	DB08833
+DB13418	_ may decrease the anticoagulant activities of _.	DB00013
+DB00749	The risk or severity of adverse effects can be increased when _ is combined with _.	DB00821
+DB06777	The metabolism of _ can be decreased when combined with _.	DB00286
+DB01586	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB00586
+DB00001	_ may decrease the anticoagulant activities of _.	DB09369
+DB00991	The risk or severity of adverse effects can be increased when _ is combined with _.	DB00482
+DB06228	The metabolism of _ can be increased when combined with _.	DB13954
+DB00078	The risk or severity of bleeding and hemorrhage can be increased when _ is combined with _.	DB06228
+DB00812	The risk or severity of adverse effects can be increased when _ is combined with _.	DB00328
+DB00812	The risk or severity of adverse effects can be increased when _ is combined with _.	DB00821
+DB01357	The metabolism of _ can be increased when combined with _.	DB01181
+DB15334	_ may decrease the anticoagulant activities of _.	DB09075
+DB09030	_ may increase the anticoagulant activities of _.	DB09070
+DB06605	The risk or severity of adverse effects can be increased when _ is combined with _.	DB00806
+DB00812	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB06695
+DB01397	The risk or severity of adverse effects can be increased when _ is combined with _.	DB01424
+DB01628	The risk or severity of adverse effects can be increased when _ is combined with _.	DB00821
+DB00461	The risk or severity of adverse effects can be increased when _ is combined with _.	DB01009
+DB09070	_ may increase the anticoagulant activities of _.	DB06228
+DB13386	_ may increase the thrombogenic activities of _.	DB00749
+DB00159	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB00286
+DB13956	_ may decrease the anticoagulant activities of _.	DB06605
+DB00812	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB09317
+DB00286	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB00255
+DB13386	_ may decrease the anticoagulant activities of _.	DB06695
+DB00500	The risk or severity of adverse effects can be increased when _ is combined with _.	DB00580
+DB01254	The serum concentration of _ can be increased when it is combined with _.	DB01609
+DB00554	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB06695
+DB04574	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB01397
+DB06228	The therapeutic efficacy of _ can be increased when used in combination with _.	DB01381
+DB01435	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB09075
+DB06206	The risk or severity of bleeding and hemorrhage can be increased when _ is combined with _.	DB06605
+DB13956	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB01399
+DB00686	The risk or severity of bleeding and bruising can be increased when _ is combined with _.	DB06777
+DB09075	_ may decrease the anticoagulant activities of _.	DB15335
+DB09075	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB00554
+DB01419	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB09075
+DB13954	The serum concentration of _ can be increased when it is combined with _.	DB04348
+DB13952	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB01419
+DB00932	_ may increase the antiplatelet activities of _.	DB09030
+DB06605	_ may decrease the anticoagulant activities of _.	DB04573
+DB00814	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB00908
+DB00001	The risk or severity of bleeding and bruising can be increased when _ is combined with _.	DB08833
+DB07931	_ may increase the thrombogenic activities of _.	DB00482
+DB01424	The excretion of _ can be decreased when combined with _.	DB04348
+DB00482	The risk or severity of bleeding and hemorrhage can be increased when _ is combined with _.	DB00013
+DB04348	The serum concentration of _ can be increased when it is combined with _.	DB06695
+DB09030	_ may increase the anticoagulant activities of _.	DB06228
+DB00749	The risk or severity of adverse effects can be increased when _ is combined with _.	DB00461
+DB00465	The risk or severity of adverse effects can be increased when _ is combined with _.	DB01419
+DB00586	The risk or severity of adverse effects can be increased when _ is combined with _.	DB01628
+DB06605	_ may increase the anticoagulant activities of _.	DB09075
+DB01283	_ may increase the thrombogenic activities of _.	DB12487
+DB06695	_ may increase the anticoagulant activities of _.	DB06228
+DB00533	_ may increase the thrombogenic activities of _.	DB15335
+DB01181	The metabolism of _ can be increased when combined with _.	DB00468
+DB02123	The risk or severity of bleeding and bruising can be increased when _ is combined with _.	DB06695
+DB06228	_ may decrease the anticoagulant activities of _.	DB15334
+DB00939	The risk or severity of adverse effects can be increased when _ is combined with _.	DB01009
+DB01435	The risk or severity of adverse effects can be increased when _ is combined with _.	DB01397
+DB00821	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB06695
+DB00812	The metabolism of _ can be increased when combined with _.	DB00255
+DB01609	The risk or severity of gastrointestinal bleeding and peptic ulcer can be increased when _ is combined with _.	DB00814
+DB00001	The risk or severity of bleeding and bruising can be increased when _ is combined with _.	DB11622
+DB01283	The risk or severity of adverse effects can be increased when _ is combined with _.	DB01419
+DB09381	_ may increase the thrombogenic activities of _.	DB00749
+DB00078	_ may increase the thrombogenic activities of _.	DB09381
+DB09075	_ may decrease the anticoagulant activities of _.	DB07931
+DB00784	The risk or severity of adverse effects can be increased when _ is combined with _.	DB01424
+DB09318	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB01628
+DB09079	The serum concentration of _ can be increased when it is combined with _.	DB00468
+DB01357	_ may decrease the anticoagulant activities of _.	DB00001
+DB00328	The serum concentration of _ can be increased when it is combined with _.	DB00468
+DB00255	_ may increase the excretion rate of _ which could result in a lower serum level and potentially a reduction in efficacy.	DB03619
+DB09030	_ may decrease the anticoagulant activities of _.	DB09317
+DB04348	The risk or severity of bleeding and bruising can be increased when _ is combined with _.	DB00013
+DB03619	_ may increase the excretion rate of _ which could result in a lower serum level and potentially a reduction in efficacy.	DB00932
+DB01600	The risk or severity of adverse effects can be increased when _ is combined with _.	DB01424
+DB00784	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB00908
+DB00583	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB00580
+DB00686	_ may decrease the anticoagulant activities of _.	DB09318
+DB00078	_ may increase the thrombogenic activities of _.	DB00269
+DB13386	_ may increase the thrombogenic activities of _.	DB00580
+DB01397	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB13956
+DB09079	The risk or severity of bleeding can be increased when _ is combined with _.	DB06695
+DB00932	The metabolism of _ can be increased when combined with _.	DB00675
+DB00573	The risk or severity of adverse effects can be increased when _ is combined with _.	DB00991
+DB01609	The serum concentration of _ can be increased when it is combined with _.	DB13953
+DB06695	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB01628
+DB00328	The risk or severity of adverse effects can be increased when _ is combined with _.	DB00991
+DB06228	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB00159
+DB04574	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB09317
+DB00675	The metabolism of _ can be decreased when combined with _.	DB00469
+DB13952	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB00814
+DB00048	The risk or severity of adverse effects can be increased when _ is combined with _.	DB09030
+DB00465	The risk or severity of adverse effects can be increased when _ is combined with _.	DB00573
+DB01009	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB00908
+DB00469	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB00908
+DB01357	The metabolism of _ can be increased when combined with _.	DB13953
+DB01586	The risk or severity of liver damage can be increased when _ is combined with _.	DB02123
+DB13953	The serum concentration of _ can be increased when it is combined with _.	DB00328
+DB00468	The serum concentration of _ can be increased when it is combined with _.	DB00255
+DB00783	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB00583
+DB00814	_ may increase the thrombogenic activities of _.	DB00269
+DB00469	The risk or severity of adverse effects can be increased when _ is combined with _.	DB00554
+DB01399	The risk or severity of adverse effects can be increased when _ is combined with _.	DB01401
+DB00991	The risk or severity of adverse effects can be increased when _ is combined with _.	DB00469
+DB09075	The serum concentration of _ can be increased when it is combined with _.	DB00539
+DB04575	_ may decrease the anticoagulant activities of _.	DB06605
+DB00686	The risk or severity of bleeding and hemorrhage can be increased when _ is combined with _.	DB00586
+DB09075	_ may decrease the anticoagulant activities of _.	DB13386
+DB00159	The risk or severity of adverse effects can be increased when _ is combined with _.	DB00461
+DB13956	The serum concentration of _ can be increased when it is combined with _.	DB00539
+DB04573	_ may decrease the anticoagulant activities of _.	DB06228
+DB00013	The risk or severity of bleeding and hemorrhage can be increased when _ is combined with _.	DB00048
+DB00806	_ may increase the anticoagulant activities of _.	DB01254
+DB06695	The serum concentration of _ can be increased when it is combined with _.	DB00788
+DB01283	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB00908
+DB01609	The metabolism of _ can be increased when combined with _.	DB00908
+DB00255	The serum concentration of _ can be decreased when it is combined with _.	DB04573
+DB04575	_ may decrease the anticoagulant activities of _.	DB06228
+DB01181	The metabolism of _ can be decreased when combined with _.	DB01381
+DB00328	The serum concentration of _ can be increased when it is combined with _.	DB13954
+DB00500	The risk or severity of adverse effects can be increased when _ is combined with _.	DB00821
+DB00078	_ may increase the thrombogenic activities of _.	DB00255
+DB09075	_ may decrease the anticoagulant activities of _.	DB13143
+DB00977	The metabolism of _ can be increased when combined with _.	DB00712
+DB00163	_ may increase the anticoagulant activities of _.	DB06228
+DB00605	The therapeutic efficacy of _ can be decreased when used in combination with _.	DB09211
+DB00675	The metabolism of _ can be decreased when combined with _.	DB00712
+DB13953	_ may decrease the anticoagulant activities of _.	DB06605
+DB01424	The metabolism of _ can be decreased when combined with _.	DB00932
+DB00908	The risk or severity of liver damage can be increased when _ is combined with _.	DB02123
+DB01399	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB13952
+DB09318	_ may decrease the anticoagulant activities of _.	DB09030
+DB00583	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB01628
+DB00001	The risk or severity of bleeding and hemorrhage can be increased when _ is combined with _.	DB00554
+DB00573	The risk or severity of adverse effects can be increased when _ is combined with _.	DB01600
+DB00539	The serum concentration of _ can be increased when it is combined with _.	DB13952
+DB00908	The metabolism of _ can be decreased when combined with _.	DB00286
+DB01283	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB13954
+DB13418	_ may increase the thrombogenic activities of _.	DB00461
+DB08857	The risk or severity of bleeding and bruising can be increased when _ is combined with _.	DB09030
+DB12487	_ may increase the thrombogenic activities of _.	DB00482
+DB06605	_ may decrease the anticoagulant activities of _.	DB11674
+DB00821	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB09317
+DB00255	The metabolism of _ can be decreased when combined with _.	DB00469
+DB00461	The risk or severity of adverse effects can be increased when _ is combined with _.	DB00784
+DB00465	The risk or severity of adverse effects can be increased when _ is combined with _.	DB00712
+DB13143	_ may decrease the anticoagulant activities of _.	DB00001
+DB13956	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB00554
+DB01399	The risk or severity of bleeding and hemorrhage can be increased when _ is combined with _.	DB06605
+DB00932	The risk or severity of bleeding and hemorrhage can be increased when _ is combined with _.	DB00001
+DB00749	The risk or severity of adverse effects can be increased when _ is combined with _.	DB00580
+DB00573	The risk or severity of adverse effects can be increased when _ is combined with _.	DB00580
+DB00788	The risk or severity of adverse effects can be increased when _ is combined with _.	DB00712
+DB09318	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB00605
+DB00539	The risk or severity of QTc prolongation can be increased when _ is combined with _.	DB00468
+DB02224	The risk or severity of adverse effects can be increased when _ is combined with _.	DB00749
+DB00939	The risk or severity of adverse effects can be increased when _ is combined with _.	DB01399
+DB00013	The risk or severity of bleeding and bruising can be increased when _ is combined with _.	DB08834
+DB00482	_ may increase the thrombogenic activities of _.	DB11478
+DB13952	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB00806
+DB00482	The risk or severity of adverse effects can be increased when _ is combined with _.	DB00605
+DB00783	The metabolism of _ can be increased when combined with _.	DB09053
+DB00461	The risk or severity of adverse effects can be increased when _ is combined with _.	DB01401
+DB00675	The risk or severity of bleeding can be increased when _ is combined with _.	DB06228
+DB13954	The metabolism of _ can be decreased when combined with _.	DB05990
+DB00580	The metabolism of _ can be decreased when combined with _.	DB00539
+DB04348	The excretion of _ can be decreased when combined with _.	DB00749
+DB00163	The metabolism of _ can be increased when combined with _.	DB00783
+DB04574	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB01628
+DB00255	The metabolism of _ can be decreased when combined with _.	DB00814
+DB04573	The serum concentration of _ can be decreased when it is combined with _.	DB00783
+DB02659	The serum concentration of _ can be decreased when it is combined with _.	DB13956
+DB00539	The risk or severity of bleeding can be increased when _ is combined with _.	DB00013
+DB00821	The risk or severity of adverse effects can be increased when _ is combined with _.	DB02224
+DB06605	The risk or severity of bleeding and bruising can be increased when _ is combined with _.	DB08857
+DB06228	The risk or severity of adverse effects can be increased when _ is combined with _.	DB09211
+DB00286	The serum concentration of _ can be decreased when it is combined with _.	DB02659
+DB08833	The metabolism of _ can be decreased when combined with _.	DB04574
+DB00806	_ may increase the anticoagulant activities of _.	DB06228
+DB00712	The risk or severity of bleeding can be increased when _ is combined with _.	DB00806
+DB04573	The serum concentration of _ can be decreased when it is combined with _.	DB13954
+DB09211	The therapeutic efficacy of _ can be decreased when used in combination with _.	DB01419
+DB01181	The risk or severity of bleeding can be increased when _ is combined with _.	DB06695
+DB00001	The therapeutic efficacy of _ can be increased when used in combination with _.	DB00806
+DB15334	_ may decrease the anticoagulant activities of _.	DB09030
+DB00712	The risk or severity of adverse effects can be increased when _ is combined with _.	DB00821
+DB04574	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB00461
+DB06605	The risk or severity of bleeding and hemorrhage can be increased when _ is combined with _.	DB01399
+DB00013	The risk or severity of bleeding can be increased when _ is combined with _.	DB09075
+DB01399	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB06228
+DB00328	The risk or severity of adverse effects can be increased when _ is combined with _.	DB00500
+DB01397	The risk or severity of bleeding and hemorrhage can be increased when _ is combined with _.	DB00001
+DB00686	The risk or severity of bleeding and hemorrhage can be increased when _ is combined with _.	DB00932
+DB00814	_ may increase the thrombogenic activities of _.	DB13386
+DB01357	The metabolism of _ can be decreased when combined with _.	DB09317
+DB00821	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB04574
+DB00468	The serum concentration of _ can be increased when it is combined with _.	DB00286
+DB00977	_ may decrease the anticoagulant activities of _.	DB00001
+DB00001	The risk or severity of bleeding can be increased when _ is combined with _.	DB00539
+DB00468	The metabolism of _ can be increased when combined with _.	DB01254
+DB00712	_ may decrease the excretion rate of _ which could result in a higher serum level.	DB00908
+DB00814	_ may increase the thrombogenic activities of _.	DB09381
+DB09079	The serum concentration of _ can be increased when it is combined with _.	DB00908
+DB08935	_ may increase the thrombogenic activities of _.	DB11674
+DB02123	The risk or severity of liver damage can be increased when _ is combined with _.	DB00675
+DB06695	_ may decrease the anticoagulant activities of _.	DB09381
+DB00712	The metabolism of _ can be decreased when combined with _.	DB13953
+DB01628	_ may increase the thrombogenic activities of _.	DB07931
+DB00586	The risk or severity of adverse effects can be increased when _ is combined with _.	DB00580
+DB06605	The risk or severity of bleeding and bruising can be increased when _ is combined with _.	DB08834
+DB00001	The risk or severity of bleeding and bruising can be increased when _ is combined with _.	DB02659
+DB09369	_ may increase the thrombogenic activities of _.	DB00821
+DB06228	The serum concentration of _ can be increased when it is combined with _.	DB00586
+DB01381	The metabolism of _ can be decreased when combined with _.	DB00749
+DB00001	The risk or severity of bleeding and hemorrhage can be increased when _ is combined with _.	DB00812
+DB01254	The risk or severity of adverse effects can be increased when _ is combined with _.	DB00078
+DB09381	The metabolism of _ can be decreased when combined with _.	DB09079
+DB00078	The risk or severity of adverse effects can be increased when _ is combined with _.	DB01181
+DB04348	_ may increase the excretion rate of _ which could result in a lower serum level and potentially a reduction in efficacy.	DB00788
+DB00932	_ may increase the antiplatelet activities of _.	DB00806
+DB09318	The metabolism of _ can be decreased when combined with _.	DB01357
+DB00500	The risk or severity of bleeding can be increased when _ is combined with _.	DB00806
+DB09053	The metabolism of _ can be increased when combined with _.	DB00812
+DB00977	The risk or severity of liver damage can be increased when _ is combined with _.	DB00908
+DB09030	The risk or severity of adverse effects can be increased when _ is combined with _.	DB08857
+DB00554	The risk or severity of adverse effects can be increased when _ is combined with _.	DB00580
+DB00554	The risk or severity of adverse effects can be increased when _ is combined with _.	DB00533
+DB09030	The risk or severity of adverse effects can be increased when _ is combined with _.	DB02123
+DB00712	The risk or severity of adverse effects can be increased when _ is combined with _.	DB00788
+DB00539	The metabolism of _ can be decreased when combined with _.	DB04574
+DB00554	The metabolism of _ can be decreased when combined with _.	DB00255
+DB00469	The risk or severity of adverse effects can be increased when _ is combined with _.	DB01419
+DB08833	The risk or severity of adverse effects can be increased when _ is combined with _.	DB09030
+DB00784	The risk or severity of adverse effects can be increased when _ is combined with _.	DB01397
+DB00255	The metabolism of _ can be increased when combined with _.	DB13954
+DB06777	The metabolism of _ can be decreased when combined with _.	DB09317
+DB00580	_ may increase the thrombogenic activities of _.	DB09369

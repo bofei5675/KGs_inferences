@@ -5,8 +5,8 @@ from layers import ConvKB
 from torch.autograd import Variable
 import torch.nn as nn
 import numpy as np
-import matplotlib.pyplot as plt
-from matplotlib.lines import Line2D
+#import matplotlib.pyplot as plt
+#from matplotlib.lines import Line2D
 from copy import deepcopy
 
 from preprocess import read_entity_from_id, read_relation_from_id, init_embeddings, build_data
@@ -25,6 +25,8 @@ CUDA = torch.cuda.is_available()
 
 def save_model(model, name, epoch, folder_name):
     print("Saving Model")
+    if not os.path.exists(folder_name):
+        os.makedirs(folder_name)
     torch.save(model.state_dict(),
                (folder_name + "trained_{}.pth").format(epoch))
     print("Done saving Model")
