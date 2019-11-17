@@ -40,7 +40,7 @@ def parse_args():
     args.add_argument("-data", "--data",
                       default="./data/WN18RR/", help="data directory")
     args.add_argument("-e_g", "--epochs_gat", type=int,
-                      default=1000, help="Number of epochs")
+                      default=400, help="Number of epochs")
     args.add_argument("-e_c", "--epochs_conv", type=int,
                       default=100, help="Number of epochs")
     args.add_argument("-w_gat", "--weight_decay_gat", type=float,

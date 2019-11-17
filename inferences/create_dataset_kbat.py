@@ -1,12 +1,14 @@
 import os
 import pandas as pd
 
-dataset_name = './drugbank_1000'
+
+entities_num = 2191
+dataset_name = './drugbank_{}'.format(entities_num)
 
 if not os.path.exists(dataset_name):
     os.makedirs(dataset_name)
 
-df = pd.read_csv('./drugbank_data_subset1000.txt', sep='\t', header=None)
+df = pd.read_csv('./drugbank_data_subset{}.txt'.format(entities_num), sep='\t', header=None)
 num_samples = df.shape[0]
 
 entities = df.iloc[:, 0].tolist() + df.iloc[:, 2].tolist()
@@ -28,14 +30,21 @@ val_size = int(0.1 * num_samples)
 test_size = int(0.2 * num_samples)
 relations_set = set(df.iloc[:, 1].tolist())
 count = 0
-while True: # make sure train data has all relations
-    train_data = df.sample(n=train_size, replace=False)
-    total_r_in_train = len(set(train_data.iloc[:, 1].tolist()))
-    if total_r_in_train == len(relations_set):
-        break
-    else:
-        count += 1
-        print(count ,'Sampling failed')
+# get all relation at least once
+drop_set = []
+train_data = []
+for r in relations_set:
+    drug_interactions = df.loc[df.iloc[:, 1] == r]
+    drug_interactions = drug_interactions.iloc[0]
+    drop_set.append(drug_interactions.name)
+    train_data.append(drug_interactions.tolist())
+
+df =  df.loc[~df.index.isin(drop_set)]
+train_size = train_size - len(train_data)
+train_data = pd.DataFrame(train_data)
+train_data = train_data.append(df.sample(n=train_size, replace=False))
+total_r_in_train = len(set(train_data.iloc[:,1].tolist()))
+print('Sampling condition:', len(relations_set), total_r_in_train)
 
 df = df.loc[~df.index.isin(train_data)]
 val_data = df.sample(n=val_size, replace=False)
