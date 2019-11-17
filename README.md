@@ -1,3 +1,22 @@
+# Inference Project 
+The folder `inferences` contains code that can processed drugbank data and prepared the training, testing data for KBAT training and evaluation. You can run this based on the following order:
+```python
+# make sure you have the original dataset from here https://www.drugbank.ca/releases/latest
+# if run on the prince, please request more cpu resources, otherwise it has a memory issue
+python process.py
+
+# this script filter down the original dataset into a smaller one
+python filter_down.py
+
+# if builds a folder that contains all data for training
+python create_dataset_kbat.py
+```
+Move the generated folder to `data`,  then you are ready to go.
+
+
+Below are original README file.
+
+---
 # Learning Attention-based Embeddings for Relation Prediction in Knowledge Graphs
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/learning-attention-based-embeddings-for-1/knowledge-graph-completion-on-fb15k-237)](https://paperswithcode.com/sota/knowledge-graph-completion-on-fb15k-237?p=learning-attention-based-embeddings-for-1)
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/learning-attention-based-embeddings-for-1/knowledge-graph-completion-on-wn18rr)](https://paperswithcode.com/sota/knowledge-graph-completion-on-wn18rr?p=learning-attention-based-embeddings-for-1)
