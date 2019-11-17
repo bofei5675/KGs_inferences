@@ -8,4 +8,6 @@
 
 source activate capstone
 cd ../
-python main.py --data ./data/drugbank_1000/ --pretrained_emb False --output_folder ./checkpoints/drugbank1000/
+python main.py --data ./data/drugbank_1000/ --pretrained_emb False\
+ --output_folder ./checkpoints/drugbank1000/ 
+
