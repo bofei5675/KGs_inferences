@@ -115,3 +115,4 @@ venv.bak/
 inferences/drugbank_data_subset1000.txt
 data/drugbank_1000/test.txt
 inferences/drugbank_data.txt
+inferences/drugbank_data_subset5000.txt
