@@ -112,3 +112,5 @@ venv.bak/
 # project specific
 *.txt
 *.xml
+inferences/drugbank_data_subset1000.txt
+data/drugbank_1000/test.txt
