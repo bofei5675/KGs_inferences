@@ -98,6 +98,7 @@ venv.bak/
 
 # Spyder project settings
 .spyderproject
+
 .spyproject
 
 # Rope project settings
@@ -109,5 +110,5 @@ venv.bak/
 # mypy
 .mypy_cache/
 # project specific
-/inferences/drug_bank_full_database.xml
-data
+*.txt
+*.xml
