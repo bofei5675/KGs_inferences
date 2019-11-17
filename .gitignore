@@ -110,3 +110,4 @@ venv.bak/
 .mypy_cache/
 # project specific
 /inferences/drug_bank_full_database.xml
+data
