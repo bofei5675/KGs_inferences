@@ -63,7 +63,7 @@ def parse_args():
                       default=86835, help="Batch size for GAT")
     args.add_argument("-neg_s_gat", "--valid_invalid_ratio_gat", type=int,
                       default=2, help="Ratio of valid to invalid triples for GAT training")
-    args.add_argument("-drop_GAT", "--drop_GAT", type=float, 
+    args.add_argument("-drop_GAT", "--drop_GAT", type=float,
                       default=0.3, help="Dropout probability for SpGAT layer")
     args.add_argument("-alpha", "--alpha", type=float,
                       default=0.2, help="LeakyRelu alphs for SpGAT layer")
