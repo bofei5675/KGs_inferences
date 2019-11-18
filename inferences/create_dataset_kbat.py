@@ -2,7 +2,7 @@ import os
 import pandas as pd
 
 
-entities_num = 2191
+entities_num = 1000
 dataset_name = './drugbank_{}'.format(entities_num)
 
 if not os.path.exists(dataset_name):
@@ -28,6 +28,7 @@ relations.to_csv(dataset_name + '/relation2id.txt', sep='\t', index=False, heade
 train_size = int(0.7 * num_samples)
 val_size = int(0.1 * num_samples)
 test_size = int(0.2 * num_samples)
+print('Data size', train_size, val_size, test_size)
 relations_set = set(df.iloc[:, 1].tolist())
 count = 0
 # get all relation at least once
@@ -40,20 +41,22 @@ for r in relations_set:
     train_data.append(drug_interactions.tolist())
 
 df =  df.loc[~df.index.isin(drop_set)]
+print('After processed', len(train_data))
 train_size = train_size - len(train_data)
+print('Train size left', train_size)
 train_data = pd.DataFrame(train_data)
 train_data = train_data.append(df.sample(n=train_size, replace=False))
 total_r_in_train = len(set(train_data.iloc[:,1].tolist()))
 print('Sampling condition:', len(relations_set), total_r_in_train)
 
-df = df.loc[~df.index.isin(train_data)]
+df = df.loc[~df.index.isin(train_data.index)]
 val_data = df.sample(n=val_size, replace=False)
-df = df.loc[~df.index.isin(val_data)]
+df = df.loc[~df.index.isin(val_data.index)]
 test_data = df.copy()
-
+print(train_data.shape, val_data.shape, test_data.shape)
 print(f'Train has {len(set(train_data.iloc[:,1].tolist()))}')
 print(f'Original dataset has {len(relations_set)}')
-
+print('Check overlap', train_data.index.isin(test_data.index).sum())
 train_data.to_csv(dataset_name + '/' + 'train.txt', sep='\t', index=False, header=None)
 val_data.to_csv(dataset_name + '/' + 'valid.txt', sep='\t', index=False, header=None)
 test_data.to_csv(dataset_name + '/' + 'test.txt', sep='\t', index=False, header=None)

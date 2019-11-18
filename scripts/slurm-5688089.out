@@ -1,0 +1,54 @@
+Using pretrained: False
+number of unique_entities -> 2191
+number of unique_entities -> 2191
+number of unique_entities -> 2191
+Initialised relations and entities randomly
+Graph created
+length of graph keys is  2191
+time taken  1033.4120013713837
+length of neighbors dict is  2191
+Total triples count 1702768, training triples 1193306, validation_triples 170472, test_triples 1704407
+Opening node_neighbors pickle object
+Initial entity dimensions torch.Size([2191, 50]) , relation dimensions torch.Size([316, 50])
+Defining model
+
+Model type -> GAT layer with 2 heads used , Initital Embeddings training
+length of unique_entities  2191
+Number of epochs 400
+
+epoch->  0
+Traceback (most recent call last):
+  File "main.py", line 399, in <module>
+    train_gat(args)
+  File "main.py", line 256, in train_gat
+    Corpus_, Corpus_.train_adj_matrix, train_indices, current_batch_2hop_indices)
+  File "/scratch/bz1030/anaconda3/envs/capstone/lib/python3.7/site-packages/torch/nn/modules/module.py", line 541, in __call__
+    result = self.forward(*input, **kwargs)
+  File "/scratch/bz1030/anaconda3/envs/capstone/lib/python3.7/site-packages/torch/nn/parallel/data_parallel.py", line 152, in forward
+    outputs = self.parallel_apply(replicas, inputs, kwargs)
+  File "/scratch/bz1030/anaconda3/envs/capstone/lib/python3.7/site-packages/torch/nn/parallel/data_parallel.py", line 162, in parallel_apply
+    return parallel_apply(replicas, inputs, kwargs, self.device_ids[:len(replicas)])
+  File "/scratch/bz1030/anaconda3/envs/capstone/lib/python3.7/site-packages/torch/nn/parallel/parallel_apply.py", line 85, in parallel_apply
+    output.reraise()
+  File "/scratch/bz1030/anaconda3/envs/capstone/lib/python3.7/site-packages/torch/_utils.py", line 385, in reraise
+    raise self.exc_type(msg)
+RuntimeError: Caught RuntimeError in replica 0 on device 0.
+Original Traceback (most recent call last):
+  File "/scratch/bz1030/anaconda3/envs/capstone/lib/python3.7/site-packages/torch/nn/parallel/parallel_apply.py", line 60, in _worker
+    output = module(*input, **kwargs)
+  File "/scratch/bz1030/anaconda3/envs/capstone/lib/python3.7/site-packages/torch/nn/modules/module.py", line 541, in __call__
+    result = self.forward(*input, **kwargs)
+  File "/scratch/bz1030/relationPrediction/models.py", line 142, in forward
+    edge_list, edge_type, edge_embed, edge_list_nhop, edge_type_nhop)
+  File "/scratch/bz1030/anaconda3/envs/capstone/lib/python3.7/site-packages/torch/nn/modules/module.py", line 541, in __call__
+    result = self.forward(*input, **kwargs)
+  File "/scratch/bz1030/relationPrediction/models.py", line 55, in forward
+    for att in self.attentions], dim=1)
+  File "/scratch/bz1030/relationPrediction/models.py", line 55, in <listcomp>
+    for att in self.attentions], dim=1)
+  File "/scratch/bz1030/anaconda3/envs/capstone/lib/python3.7/site-packages/torch/nn/modules/module.py", line 541, in __call__
+    result = self.forward(*input, **kwargs)
+  File "/scratch/bz1030/relationPrediction/layers.py", line 106, in forward
+    edge = torch.cat((edge[:, :], edge_list_nhop[:, :]), dim=1)
+RuntimeError: invalid argument 0: Sizes of tensors must match except in dimension 1. Got 2 and 1 in dimension 0 at /opt/conda/conda-bld/pytorch_1573049306803/work/aten/src/THC/generic/THCTensorMath.cu:71
+

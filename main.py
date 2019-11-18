@@ -40,9 +40,9 @@ def parse_args():
     args.add_argument("-data", "--data",
                       default="./data/WN18RR/", help="data directory")
     args.add_argument("-e_g", "--epochs_gat", type=int,
-                      default=400, help="Number of epochs")
+                      default=5, help="Number of epochs")
     args.add_argument("-e_c", "--epochs_conv", type=int,
-                      default=100, help="Number of epochs")
+                      default=1, help="Number of epochs")
     args.add_argument("-w_gat", "--weight_decay_gat", type=float,
                       default=5e-6, help="L2 reglarization for gat")
     args.add_argument("-w_conv", "--weight_decay_conv", type=float,
@@ -60,7 +60,7 @@ def parse_args():
 
     # arguments for GAT
     args.add_argument("-b_gat", "--batch_size_gat", type=int,
-                      default=86835, help="Batch size for GAT")
+                      default=5000, help="Batch size for GAT")
     args.add_argument("-neg_s_gat", "--valid_invalid_ratio_gat", type=int,
                       default=2, help="Ratio of valid to invalid triples for GAT training")
     args.add_argument("-drop_GAT", "--drop_GAT", type=float,
@@ -76,7 +76,7 @@ def parse_args():
 
     # arguments for convolution network
     args.add_argument("-b_conv", "--batch_size_conv", type=int,
-                      default=128, help="Batch size for conv")
+                      default=16, help="Batch size for conv")
     args.add_argument("-alpha_conv", "--alpha_conv", type=float,
                       default=0.2, help="LeakyRelu alphas for conv layer")
     args.add_argument("-neg_s_conv", "--valid_invalid_ratio_conv", type=int, default=40,
@@ -101,7 +101,7 @@ if not os.path.exists(args.output_folder):
 def load_data(args):
     train_data, validation_data, test_data, entity2id, relation2id, headTailSelector, unique_entities_train = build_data(
         args.data, is_unweigted=False, directed=False)
-
+    print('Training size', len(train_data), 'Val size', len(validation_data), 'Test size', len(test_data))
     if args.pretrained_emb:
         entity_embeddings, relation_embeddings = init_embeddings(os.path.join(args.data, 'entity2vec.txt'),
                                                                  os.path.join(args.data, 'relation2vec.txt'))
@@ -193,6 +193,8 @@ def train_gat(args):
     model_gat = SpKBGATModified(entity_embeddings, relation_embeddings, args.entity_out_dim, args.entity_out_dim,
                                 args.drop_GAT, args.alpha, args.nheads_GAT)
 
+    model_gat = nn.DataParallel(model_gat)
+
     if CUDA:
         model_gat.cuda()
 
@@ -252,7 +254,7 @@ def train_gat(args):
             # forward pass
             entity_embed, relation_embed = model_gat(
                 Corpus_, Corpus_.train_adj_matrix, train_indices, current_batch_2hop_indices)
-
+            print('Forward pass',entity_embed.shape, relation_embed.shape)
             optimizer.zero_grad()
 
             loss = batch_gat_loss(
@@ -295,14 +297,21 @@ def train_conv(args):
                                  args.drop_GAT, args.drop_conv, args.alpha, args.alpha_conv,
                                  args.nheads_GAT, args.out_channels)
 
+    model_gat = nn.DataParallel(model_gat)
+    model_conv = nn.DataParallel(model_conv)
+
     if CUDA:
         model_conv.cuda()
         model_gat.cuda()
 
     model_gat.load_state_dict(torch.load(
         '{}/trained_{}.pth'.format(args.output_folder, args.epochs_gat - 1)))
-    model_conv.final_entity_embeddings = model_gat.final_entity_embeddings
-    model_conv.final_relation_embeddings = model_gat.final_relation_embeddings
+    if isinstance(model_conv, nn.DataParallel):
+        model_conv.module.final_entity_embeddings = model_gat.module.final_entity_embeddings
+        model_conv.module.final_relation_embeddings = model_gat.module.final_relation_embeddings
+    else:
+        model_conv.final_entity_embeddings = model_gat.final_entity_embeddings
+        model_conv.final_relation_embeddings = model_gat.final_relation_embeddings
 
     Corpus_.batch_size = args.batch_size_conv
     Corpus_.invalid_valid_ratio = int(args.valid_invalid_ratio_conv)
@@ -381,13 +390,18 @@ def evaluate_conv(args, unique_entities):
     model_conv = SpKBGATConvOnly(entity_embeddings, relation_embeddings, args.entity_out_dim, args.entity_out_dim,
                                  args.drop_GAT, args.drop_conv, args.alpha, args.alpha_conv,
                                  args.nheads_GAT, args.out_channels)
+    model_conv = nn.DataParallel(model_conv)
     model_conv.load_state_dict(torch.load(
         '{0}conv/trained_{1}.pth'.format(args.output_folder, args.epochs_conv - 1)))
 
     model_conv.cuda()
     model_conv.eval()
     with torch.no_grad():
-        Corpus_.get_validation_pred(args, model_conv, unique_entities)
+        if isinstance(model_conv, nn.DataParallel):
+            Corpus_.get_validation_pred(args, model_conv.module, unique_entities)
+        else:
+            Corpus_.get_validation_pred(args, model_conv, unique_entities)
+
 
 
 train_gat(args)

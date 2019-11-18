@@ -1,6 +1,6 @@
 
 
-NUM_ENTITIES = 2191
+NUM_ENTITIES = 100
 drugset = set()
 with open('./drugbank_data.txt', 'r') as f, open('./drugbank_data_subset{}.txt'.format(NUM_ENTITIES),'a+') as out:
 

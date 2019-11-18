@@ -17,7 +17,6 @@ class SpGAT(nn.Module):
             relation_dim -> Relation Embedding dimensions
             num_nodes -> number of nodes in the Graph
             nheads -> Used for Multihead attention
-
         """
         super(SpGAT, self).__init__()
         self.dropout = dropout
@@ -47,12 +46,17 @@ class SpGAT(nn.Module):
     def forward(self, Corpus_, batch_inputs, entity_embeddings, relation_embed,
                 edge_list, edge_type, edge_embed, edge_list_nhop, edge_type_nhop):
         x = entity_embeddings
-
-        edge_embed_nhop = relation_embed[
-            edge_type_nhop[:, 0]] + relation_embed[edge_type_nhop[:, 1]]
-
-        x = torch.cat([att(x, edge_list, edge_embed, edge_list_nhop, edge_embed_nhop)
-                       for att in self.attentions], dim=1)
+        edge_embed_nhop = relation_embed[edge_type_nhop[:, 0]] + relation_embed[edge_type_nhop[:, 1]]
+        #print(edge_embed_nhop.shape, edge_type_nhop[:, 0].shape, edge_type_nhop[:, 1].shape)
+        #print('In SPGAT', edge_list_nhop.shape)
+        attn_output = []
+        for att in self.attentions:
+            out = att(x, edge_list, edge_embed, edge_list_nhop, edge_embed_nhop)
+            #print(out.shape)
+            attn_output.append(out)
+        x = torch.cat(attn_output, dim=1)
+        #x = torch.cat([att(x, edge_list, edge_embed, edge_list_nhop, edge_embed_nhop)
+        #               for att in self.attentions], dim=1)
         x = self.dropout_layer(x)
 
         out_relation_1 = relation_embed.mm(self.W)
@@ -61,7 +65,7 @@ class SpGAT(nn.Module):
         edge_embed_nhop = out_relation_1[
             edge_type_nhop[:, 0]] + out_relation_1[edge_type_nhop[:, 1]]
 
-        x = F.elu(self.out_att(x, edge_list, edge_embed,
+        x = F.relu(self.out_att(x, edge_list, edge_embed,
                                edge_list_nhop, edge_embed_nhop))
         return x, out_relation_1
 
@@ -115,7 +119,7 @@ class SpKBGATModified(nn.Module):
         edge_list = adj[0]
         edge_type = adj[1]
         #print(train_indices_nhop.shape)
-        #print(train_indices_nhop[:, 3].unsqueeze(-1).shape, train_indices_nhop[:, 0].unsqueeze(-1).shape)
+        #print('In KBAT', train_indices_nhop[:, 3].unsqueeze(-1).shape, train_indices_nhop[:, 0].unsqueeze(-1).shape)
         edge_list_nhop = torch.cat(
             (train_indices_nhop[:, 3].unsqueeze(-1), train_indices_nhop[:, 0].unsqueeze(-1)), dim=1).t()
         edge_type_nhop = torch.cat(
@@ -136,7 +140,7 @@ class SpKBGATModified(nn.Module):
 
         # self.relation_embeddings.data = F.normalize(
         #     self.relation_embeddings.data, p=2, dim=1)
-
+        # pass to SPGAT HERE
         out_entity_1, out_relation_1 = self.sparse_gat_1(
             Corpus_, batch_inputs, self.entity_embeddings, self.relation_embeddings,
             edge_list, edge_type, edge_embed, edge_list_nhop, edge_type_nhop)

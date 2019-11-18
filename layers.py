@@ -100,15 +100,19 @@ class SpGraphAttentionLayer(nn.Module):
         self.special_spmm_final = SpecialSpmmFinal()
 
     def forward(self, input, edge, edge_embed, edge_list_nhop, edge_embed_nhop):
+        #print('In Attn layer:', input.shape, edge.shape,edge_embed.shape, edge_list_nhop.shape, edge_embed_nhop.shape)
+
         N = input.size()[0]
 
         # Self-attention on the nodes - Shared attention mechanism
+        #print('BUG Happens here:',edge.shape, edge_list_nhop.shape)
         edge = torch.cat((edge[:, :], edge_list_nhop[:, :]), dim=1)
         edge_embed = torch.cat(
             (edge_embed[:, :], edge_embed_nhop[:, :]), dim=0)
-
+        #print('After bug', edge_embed.shape)
         edge_h = torch.cat(
             (input[edge[0, :], :], input[edge[1, :], :], edge_embed[:, :]), dim=1).t()
+        #print('After concat:',  edge_h.shape)
         # edge_h: (2*in_dim + nrela_dim) x E
 
         edge_m = self.a.mm(edge_h)
