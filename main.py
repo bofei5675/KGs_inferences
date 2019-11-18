@@ -40,9 +40,9 @@ def parse_args():
     args.add_argument("-data", "--data",
                       default="./data/WN18RR/", help="data directory")
     args.add_argument("-e_g", "--epochs_gat", type=int,
-                      default=5, help="Number of epochs")
+                      default=600, help="Number of epochs")
     args.add_argument("-e_c", "--epochs_conv", type=int,
-                      default=1, help="Number of epochs")
+                      default=100, help="Number of epochs")
     args.add_argument("-w_gat", "--weight_decay_gat", type=float,
                       default=5e-6, help="L2 reglarization for gat")
     args.add_argument("-w_conv", "--weight_decay_conv", type=float,
@@ -76,7 +76,7 @@ def parse_args():
 
     # arguments for convolution network
     args.add_argument("-b_conv", "--batch_size_conv", type=int,
-                      default=16, help="Batch size for conv")
+                      default=64, help="Batch size for conv")
     args.add_argument("-alpha_conv", "--alpha_conv", type=float,
                       default=0.2, help="LeakyRelu alphas for conv layer")
     args.add_argument("-neg_s_conv", "--valid_invalid_ratio_conv", type=int, default=40,

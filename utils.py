@@ -29,6 +29,8 @@ def save_model(model, name, epoch, folder_name):
         os.makedirs(folder_name)
     torch.save(model.state_dict(),
                (folder_name + "trained_{}.pth").format(epoch))
+    if epoch > 0:
+        os.remove(folder_name + "trained_{}.pth".format(epoch - 1))
     print("Done saving Model")
 
 
