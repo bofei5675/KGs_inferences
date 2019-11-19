@@ -354,7 +354,7 @@ class Corpus:
         average_hits_at_one_head, average_hits_at_one_tail = [], []
         average_mean_rank_head, average_mean_rank_tail = [], []
         average_mean_recip_rank_head, average_mean_recip_rank_tail = [], []
-
+        log=open(args.output_folder + 'eval.txt', 'w')
         for iters in range(1):
             start_time = time.time()
 
@@ -520,35 +520,35 @@ class Corpus:
 
             assert len(ranks_head) == len(reciprocal_ranks_head)
             assert len(ranks_tail) == len(reciprocal_ranks_tail)
-            print("here {}".format(len(ranks_head)))
-            print("\nCurrent iteration time {}".format(time.time() - start_time))
-            print("Stats for replacing head are -> ")
+            print("here {}".format(len(ranks_head)), file=log)
+            print("\nCurrent iteration time {}".format(time.time() - start_time), file=log)
+            print("Stats for replacing head are -> ", file=log)
             print("Current iteration Hits@100 are {}".format(
-                hits_at_100_head / float(len(ranks_head))))
+                hits_at_100_head / float(len(ranks_head))), file=log)
             print("Current iteration Hits@10 are {}".format(
-                hits_at_ten_head / len(ranks_head)))
+                hits_at_ten_head / len(ranks_head)), file=log)
             print("Current iteration Hits@3 are {}".format(
-                hits_at_three_head / len(ranks_head)))
+                hits_at_three_head / len(ranks_head)), file=log)
             print("Current iteration Hits@1 are {}".format(
-                hits_at_one_head / len(ranks_head)))
+                hits_at_one_head / len(ranks_head)), file=log)
             print("Current iteration Mean rank {}".format(
-                sum(ranks_head) / len(ranks_head)))
+                sum(ranks_head) / len(ranks_head)), file=log)
             print("Current iteration Mean Reciprocal Rank {}".format(
-                sum(reciprocal_ranks_head) / len(reciprocal_ranks_head)))
+                sum(reciprocal_ranks_head) / len(reciprocal_ranks_head)), file=log)
 
             print("\nStats for replacing tail are -> ")
             print("Current iteration Hits@100 are {}".format(
-                hits_at_100_tail / len(ranks_head)))
+                hits_at_100_tail / len(ranks_head)), file=log)
             print("Current iteration Hits@10 are {}".format(
-                hits_at_ten_tail / len(ranks_head)))
+                hits_at_ten_tail / len(ranks_head)), file=log)
             print("Current iteration Hits@3 are {}".format(
-                hits_at_three_tail / len(ranks_head)))
+                hits_at_three_tail / len(ranks_head)), file=log)
             print("Current iteration Hits@1 are {}".format(
-                hits_at_one_tail / len(ranks_head)))
+                hits_at_one_tail / len(ranks_head)), file=log)
             print("Current iteration Mean rank {}".format(
-                sum(ranks_tail) / len(ranks_tail)))
+                sum(ranks_tail) / len(ranks_tail)), file=log)
             print("Current iteration Mean Reciprocal Rank {}".format(
-                sum(reciprocal_ranks_tail) / len(reciprocal_ranks_tail)))
+                sum(reciprocal_ranks_tail) / len(reciprocal_ranks_tail)), file=log)
 
             average_hits_at_100_head.append(
                 hits_at_100_head / len(ranks_head))
@@ -574,33 +574,33 @@ class Corpus:
             average_mean_recip_rank_tail.append(
                 sum(reciprocal_ranks_tail) / len(reciprocal_ranks_tail))
 
-        print("\nAveraged stats for replacing head are -> ")
+        print("\nAveraged stats for replacing head are -> ", file=log)
         print("Hits@100 are {}".format(
-            sum(average_hits_at_100_head) / len(average_hits_at_100_head)))
+            sum(average_hits_at_100_head) / len(average_hits_at_100_head)), file=log)
         print("Hits@10 are {}".format(
-            sum(average_hits_at_ten_head) / len(average_hits_at_ten_head)))
+            sum(average_hits_at_ten_head) / len(average_hits_at_ten_head)), file=log)
         print("Hits@3 are {}".format(
-            sum(average_hits_at_three_head) / len(average_hits_at_three_head)))
+            sum(average_hits_at_three_head) / len(average_hits_at_three_head)), file=log)
         print("Hits@1 are {}".format(
-            sum(average_hits_at_one_head) / len(average_hits_at_one_head)))
+            sum(average_hits_at_one_head) / len(average_hits_at_one_head)), file=log)
         print("Mean rank {}".format(
-            sum(average_mean_rank_head) / len(average_mean_rank_head)))
+            sum(average_mean_rank_head) / len(average_mean_rank_head)), file=log)
         print("Mean Reciprocal Rank {}".format(
-            sum(average_mean_recip_rank_head) / len(average_mean_recip_rank_head)))
+            sum(average_mean_recip_rank_head) / len(average_mean_recip_rank_head)), file=log)
 
-        print("\nAveraged stats for replacing tail are -> ")
+        print("\nAveraged stats for replacing tail are -> ", file=log)
         print("Hits@100 are {}".format(
-            sum(average_hits_at_100_tail) / len(average_hits_at_100_tail)))
+            sum(average_hits_at_100_tail) / len(average_hits_at_100_tail)), file=log)
         print("Hits@10 are {}".format(
-            sum(average_hits_at_ten_tail) / len(average_hits_at_ten_tail)))
+            sum(average_hits_at_ten_tail) / len(average_hits_at_ten_tail)), file=log)
         print("Hits@3 are {}".format(
-            sum(average_hits_at_three_tail) / len(average_hits_at_three_tail)))
+            sum(average_hits_at_three_tail) / len(average_hits_at_three_tail)), file=log)
         print("Hits@1 are {}".format(
-            sum(average_hits_at_one_tail) / len(average_hits_at_one_tail)))
+            sum(average_hits_at_one_tail) / len(average_hits_at_one_tail)), file=log)
         print("Mean rank {}".format(
-            sum(average_mean_rank_tail) / len(average_mean_rank_tail)))
+            sum(average_mean_rank_tail) / len(average_mean_rank_tail)), file=log)
         print("Mean Reciprocal Rank {}".format(
-            sum(average_mean_recip_rank_tail) / len(average_mean_recip_rank_tail)))
+            sum(average_mean_recip_rank_tail) / len(average_mean_recip_rank_tail)), file=log)
 
         cumulative_hits_100 = (sum(average_hits_at_100_head) / len(average_hits_at_100_head)
                                + sum(average_hits_at_100_tail) / len(average_hits_at_100_tail)) / 2
@@ -615,10 +615,10 @@ class Corpus:
         cumulative_mean_recip_rank = (sum(average_mean_recip_rank_head) / len(average_mean_recip_rank_head) + sum(
             average_mean_recip_rank_tail) / len(average_mean_recip_rank_tail)) / 2
 
-        print("\nCumulative stats are -> ")
-        print("Hits@100 are {}".format(cumulative_hits_100))
-        print("Hits@10 are {}".format(cumulative_hits_ten))
-        print("Hits@3 are {}".format(cumulative_hits_three))
-        print("Hits@1 are {}".format(cumulative_hits_one))
-        print("Mean rank {}".format(cumulative_mean_rank))
-        print("Mean Reciprocal Rank {}".format(cumulative_mean_recip_rank))
+        print("\nCumulative stats are -> ", file=log)
+        print("Hits@100 are {}".format(cumulative_hits_100), file=log)
+        print("Hits@10 are {}".format(cumulative_hits_ten), file=log)
+        print("Hits@3 are {}".format(cumulative_hits_three), file=log)
+        print("Hits@1 are {}".format(cumulative_hits_one), file=log)
+        print("Mean rank {}".format(cumulative_mean_rank), file=log)
+        print("Mean Reciprocal Rank {}".format(cumulative_mean_recip_rank), file=log)

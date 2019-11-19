@@ -2,7 +2,7 @@ import os
 import pandas as pd
 
 
-entities_num = 1000
+entities_num = 2191
 dataset_name = './drugbank_{}'.format(entities_num)
 
 if not os.path.exists(dataset_name):

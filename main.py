@@ -40,9 +40,9 @@ def parse_args():
     args.add_argument("-data", "--data",
                       default="./data/WN18RR/", help="data directory")
     args.add_argument("-e_g", "--epochs_gat", type=int,
-                      default=600, help="Number of epochs")
+                      default=8, help="Number of epochs")
     args.add_argument("-e_c", "--epochs_conv", type=int,
-                      default=100, help="Number of epochs")
+                      default=2, help="Number of epochs")
     args.add_argument("-w_gat", "--weight_decay_gat", type=float,
                       default=5e-6, help="L2 reglarization for gat")
     args.add_argument("-w_conv", "--weight_decay_conv", type=float,
@@ -254,7 +254,7 @@ def train_gat(args):
             # forward pass
             entity_embed, relation_embed = model_gat(
                 Corpus_, Corpus_.train_adj_matrix, train_indices, current_batch_2hop_indices)
-            print('Forward pass',entity_embed.shape, relation_embed.shape)
+            print('Forward pass', entity_embed.shape, relation_embed.shape)
             optimizer.zero_grad()
 
             loss = batch_gat_loss(
@@ -281,7 +281,7 @@ def train_gat(args):
         epoch_losses.append(sum(epoch_loss) / len(epoch_loss))
 
         save_model(model_gat, args.data, epoch,
-                   args.output_folder)
+                   args.output_folder + 'gat/')
 
 
 def train_conv(args):
@@ -305,7 +305,7 @@ def train_conv(args):
         model_gat.cuda()
 
     model_gat.load_state_dict(torch.load(
-        '{}/trained_{}.pth'.format(args.output_folder, args.epochs_gat - 1)))
+        '{}/trained_{}.pth'.format(args.output_folder + 'gat', args.epochs_gat - 1)))
     if isinstance(model_conv, nn.DataParallel):
         model_conv.module.final_entity_embeddings = model_gat.module.final_entity_embeddings
         model_conv.module.final_relation_embeddings = model_gat.module.final_relation_embeddings
@@ -405,6 +405,5 @@ def evaluate_conv(args, unique_entities):
 
 
 train_gat(args)
-
 train_conv(args)
 evaluate_conv(args, Corpus_.unique_entities_train)
