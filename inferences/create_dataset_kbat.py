@@ -2,13 +2,15 @@ import os
 import pandas as pd
 
 
-entities_num = 2191
+entities_num = 1500
 dataset_name = './drugbank_{}'.format(entities_num)
+#dataset_name = './deepddi'
 
 if not os.path.exists(dataset_name):
     os.makedirs(dataset_name)
 
 df = pd.read_csv('./drugbank_data_subset{}.txt'.format(entities_num), sep='\t', header=None)
+#df = pd.read_csv('./deepddi_dataset.txt', sep='\t', header=None)
 num_samples = df.shape[0]
 
 entities = df.iloc[:, 0].tolist() + df.iloc[:, 2].tolist()

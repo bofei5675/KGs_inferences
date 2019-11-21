@@ -1,0 +1,42 @@
+Using pretrained: False
+number of unique_entities -> 1861
+number of unique_entities -> 1861
+number of unique_entities -> 1861
+Training size 2 Val size 2 Test size 2
+Initialised relations and entities randomly
+Graph created
+length of graph keys is  1861
+time taken  305.7633080482483
+length of neighbors dict is  1861
+Total triples count 627173, training triples 439073, validation_triples 62724, test_triples 125376
+Opening node_neighbors pickle object
+Initial entity dimensions torch.Size([1861, 50]) , relation dimensions torch.Size([275, 50])
+Defining model
+
+Model type -> GAT layer with 2 heads used , Initital Embeddings training
+length of unique_entities  1861
+Number of epochs 800
+
+epoch->  0
+Traceback (most recent call last):
+  File "main.py", line 407, in <module>
+    train_gat(args)
+  File "main.py", line 256, in train_gat
+    Corpus_, Corpus_.train_adj_matrix, train_indices, current_batch_2hop_indices)
+  File "/scratch/bz1030/anaconda3/envs/capstone/lib/python3.7/site-packages/torch/nn/modules/module.py", line 541, in __call__
+    result = self.forward(*input, **kwargs)
+  File "/scratch/bz1030/anaconda3/envs/capstone/lib/python3.7/site-packages/torch/nn/parallel/data_parallel.py", line 150, in forward
+    return self.module(*inputs[0], **kwargs[0])
+  File "/scratch/bz1030/anaconda3/envs/capstone/lib/python3.7/site-packages/torch/nn/modules/module.py", line 541, in __call__
+    result = self.forward(*input, **kwargs)
+  File "/scratch/bz1030/relationPrediction/models.py", line 146, in forward
+    edge_list, edge_type, edge_embed, edge_list_nhop, edge_type_nhop)
+  File "/scratch/bz1030/anaconda3/envs/capstone/lib/python3.7/site-packages/torch/nn/modules/module.py", line 541, in __call__
+    result = self.forward(*input, **kwargs)
+  File "/scratch/bz1030/relationPrediction/models.py", line 69, in forward
+    edge_list_nhop, edge_embed_nhop))
+  File "/scratch/bz1030/anaconda3/envs/capstone/lib/python3.7/site-packages/torch/nn/modules/module.py", line 541, in __call__
+    result = self.forward(*input, **kwargs)
+  File "/scratch/bz1030/relationPrediction/layers.py", line 114, in forward
+    (input[edge[0, :], :], input[edge[1, :], :], edge_embed[:, :]), dim=1).t()
+RuntimeError: CUDA out of memory. Tried to allocate 7.66 GiB (GPU 0; 22.38 GiB total capacity; 17.19 GiB already allocated; 3.76 GiB free; 917.85 MiB cached)

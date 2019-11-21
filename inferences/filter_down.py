@@ -1,8 +1,9 @@
 
 import time
-NUM_ENTITIES = 2191
+NUM_ENTITIES = 1200
 drugset = set()
 tuple_sets = set()
+nodes_count = {}
 with open('./drugbank_data.txt', 'r') as f, open('./drugbank_data_subset{}.txt'.format(NUM_ENTITIES), 'a+') as out:
     total_lines = 0
     write_lines = 0
@@ -23,7 +24,7 @@ with open('./drugbank_data.txt', 'r') as f, open('./drugbank_data_subset{}.txt'.
             total_lines += 1
             #print('Repeat lines')
             continue
-
+        
         tuple_sets.add(' '.join([drug1, relation, drug2]))
         tuple_sets.add(' '.join([drug2, relation, drug1]))
         total_lines += 1

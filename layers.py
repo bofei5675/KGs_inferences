@@ -44,8 +44,10 @@ class SpecialSpmmFunctionFinal(torch.autograd.Function):
     @staticmethod
     def forward(ctx, edge, edge_w, N, E, out_features):
         # assert indices.requires_grad == False
+        #print('line 48 ', edge.device, edge_w.device, N, out_features)
         a = torch.sparse_coo_tensor(
-            edge, edge_w, torch.Size([N, N, out_features]))
+            edge, edge_w, torch.Size([N, N, out_features]), device=torch.device('cuda:1'))
+        a = a.cuda(1)
         b = torch.sparse.sum(a, dim=1)
         ctx.N = b.shape[0]
         ctx.outfeat = b.shape[1]
@@ -61,7 +63,7 @@ class SpecialSpmmFunctionFinal(torch.autograd.Function):
             edge_sources = ctx.indices
 
             if(CUDA):
-                edge_sources = edge_sources.cuda()
+                edge_sources = edge_sources.cuda(1)
 
             grad_values = grad_output[edge_sources]
             # grad_values = grad_values.view(ctx.E, ctx.outfeat)
@@ -91,6 +93,7 @@ class SpGraphAttentionLayer(nn.Module):
 
         self.a = nn.Parameter(torch.zeros(
             size=(out_features, 2 * in_features + nrela_dim)))
+        self.a.cuda(1)
         nn.init.xavier_normal_(self.a.data, gain=1.414)
         self.a_2 = nn.Parameter(torch.zeros(size=(1, out_features)))
         nn.init.xavier_normal_(self.a_2.data, gain=1.414)
@@ -98,6 +101,7 @@ class SpGraphAttentionLayer(nn.Module):
         self.dropout = nn.Dropout(dropout)
         self.leakyrelu = nn.LeakyReLU(self.alpha)
         self.special_spmm_final = SpecialSpmmFinal()
+        self.special_spmm_final = self.special_spmm_final.cuda(1)
 
     def forward(self, input, edge, edge_embed, edge_list_nhop, edge_embed_nhop):
         #print('In Attn layer:', input.shape, edge.shape,edge_embed.shape, edge_list_nhop.shape, edge_embed_nhop.shape)
@@ -105,16 +109,27 @@ class SpGraphAttentionLayer(nn.Module):
         N = input.size()[0]
 
         # Self-attention on the nodes - Shared attention mechanism
-        #print('BUG Happens here:',edge.shape, edge_list_nhop.shape)
+        print('BUG Happens here:',edge.shape, edge_list_nhop.shape, edge_embed.shape, edge_embed_nhop.shape)
+        if torch.cuda.device_count() > 1:
+            edge = edge.cuda(1)
+            edge_list_nhop = edge_list_nhop.cuda(1)
+            edge_embed = edge_embed.cuda(1)
+            edge_embed_nhop = edge_embed_nhop.cuda(1)
+            input = input.cuda(1)
+
+
         edge = torch.cat((edge[:, :], edge_list_nhop[:, :]), dim=1)
         edge_embed = torch.cat(
             (edge_embed[:, :], edge_embed_nhop[:, :]), dim=0)
+        print('edge embed', edge_embed.device)
         #print('After bug', edge_embed.shape)
         edge_h = torch.cat(
             (input[edge[0, :], :], input[edge[1, :], :], edge_embed[:, :]), dim=1).t()
+
+        edge_h.cuda(1)
         #print('After concat:',  edge_h.shape)
         # edge_h: (2*in_dim + nrela_dim) x E
-
+        print(edge_h.device, self.a.device)
         edge_m = self.a.mm(edge_h)
         # edge_m: D * E
 
@@ -126,6 +141,7 @@ class SpGraphAttentionLayer(nn.Module):
 
         e_rowsum = self.special_spmm_final(
             edge, edge_e, N, edge_e.shape[0], 1)
+        e_rowsum = e_rowsum.cuda(1)
         e_rowsum[e_rowsum == 0.0] = 1e-12
 
         e_rowsum = e_rowsum
@@ -145,7 +161,7 @@ class SpGraphAttentionLayer(nn.Module):
         # h_prime: N x out
         h_prime = h_prime.div(e_rowsum)
         # h_prime: N x out
-
+        h_prime = h_prime.cuda(0)
         assert not torch.isnan(h_prime).any()
         if self.concat:
             # if this layer is not last layer,

@@ -193,10 +193,7 @@ def train_gat(args):
     model_gat = SpKBGATModified(entity_embeddings, relation_embeddings, args.entity_out_dim, args.entity_out_dim,
                                 args.drop_GAT, args.alpha, args.nheads_GAT)
 
-    model_gat = nn.DataParallel(model_gat)
-
-    if CUDA:
-        model_gat.cuda()
+    # model_gat = nn.DataParallel(model_gat)
 
     optimizer = torch.optim.Adam(
         model_gat.parameters(), lr=args.lr, weight_decay=args.weight_decay_gat)
@@ -363,7 +360,6 @@ def train_conv(args):
             optimizer.zero_grad()
 
             loss = margin_loss(preds.view(-1), train_values.view(-1))
-
             loss.backward()
             optimizer.step()
 
@@ -403,7 +399,9 @@ def evaluate_conv(args, unique_entities):
             Corpus_.get_validation_pred(args, model_conv, unique_entities)
 
 
-
+print('CUDA device count', torch.cuda.device_count())
+print('CUDA device 1', torch.cuda.device('cuda:0'))
+print('CUDA device 2', torch.cuda.device('cuda:1'))
 train_gat(args)
-train_conv(args)
-evaluate_conv(args, Corpus_.unique_entities_train)
+#train_conv(args)
+# evaluate_conv(args, Corpus_.unique_entities_train)

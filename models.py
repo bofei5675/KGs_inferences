@@ -34,14 +34,16 @@ class SpGAT(nn.Module):
 
         # W matrix to convert h_input to h_output dimension
         self.W = nn.Parameter(torch.zeros(size=(relation_dim, nheads * nhid)))
+        self.W = self.W.cuda(1)
         nn.init.xavier_uniform_(self.W.data, gain=1.414)
-
+        self.device = torch.device('cuda:1')
         self.out_att = SpGraphAttentionLayer(num_nodes, nhid * nheads,
                                              nheads * nhid, nheads * nhid,
                                              dropout=dropout,
                                              alpha=alpha,
                                              concat=False
                                              )
+        self.out_att = self.out_att.to(self.device)
 
     def forward(self, Corpus_, batch_inputs, entity_embeddings, relation_embed,
                 edge_list, edge_type, edge_embed, edge_list_nhop, edge_type_nhop):
@@ -55,6 +57,7 @@ class SpGAT(nn.Module):
             #print(out.shape)
             attn_output.append(out)
         x = torch.cat(attn_output, dim=1)
+        # x = x.cuda()
         #x = torch.cat([att(x, edge_list, edge_embed, edge_list_nhop, edge_embed_nhop)
         #               for att in self.attentions], dim=1)
         x = self.dropout_layer(x)
@@ -109,7 +112,7 @@ class SpKBGATModified(nn.Module):
 
         self.sparse_gat_1 = SpGAT(self.num_nodes, self.entity_in_dim, self.entity_out_dim_1, self.relation_dim,
                                   self.drop_GAT, self.alpha, self.nheads_GAT_1)
-
+        self.sparse_gat_1 = self.sparse_gat_1.cuda(1)
         self.W_entities = nn.Parameter(torch.zeros(
             size=(self.entity_in_dim, self.entity_out_dim_1 * self.nheads_GAT_1)))
         nn.init.xavier_uniform_(self.W_entities.data, gain=1.414)
@@ -144,7 +147,8 @@ class SpKBGATModified(nn.Module):
         out_entity_1, out_relation_1 = self.sparse_gat_1(
             Corpus_, batch_inputs, self.entity_embeddings, self.relation_embeddings,
             edge_list, edge_type, edge_embed, edge_list_nhop, edge_type_nhop)
-
+        out_entity_1 = out_entity_1.cuda(0)
+        out_relation_1 = out_relation_1.cuda(0)
         mask_indices = torch.unique(batch_inputs[:, 2]).cuda()
         mask = torch.zeros(self.entity_embeddings.shape[0]).cuda()
         mask[mask_indices] = 1.0

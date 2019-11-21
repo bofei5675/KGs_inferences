@@ -1,0 +1,35 @@
+Using pretrained: False
+number of unique_entities -> 1500
+number of unique_entities -> 1500
+number of unique_entities -> 1500
+Training size 2 Val size 2 Test size 2
+Initialised relations and entities randomly
+Graph created
+length of graph keys is  1500
+time taken  143.21008467674255
+length of neighbors dict is  1500
+Total triples count 424043, training triples 296863, validation_triples 42409, test_triples 84771
+Opening node_neighbors pickle object
+Initial entity dimensions torch.Size([1500, 50]) , relation dimensions torch.Size([208, 50])
+Defining model
+
+Model type -> GAT layer with 2 heads used , Initital Embeddings training
+length of unique_entities  1500
+Number of epochs 800
+
+epoch->  0
+Forward pass torch.Size([1500, 200]) torch.Size([208, 200])
+Iteration-> 0  , Iteration_time-> 5.1255 , Iteration_loss 4.9557
+Forward pass torch.Size([1500, 200]) torch.Size([208, 200])
+Iteration-> 1  , Iteration_time-> 4.5393 , Iteration_loss 4.8478
+Forward pass torch.Size([1500, 200]) torch.Size([208, 200])
+Traceback (most recent call last):
+  File "main.py", line 407, in <module>
+    train_gat(args)
+  File "main.py", line 263, in train_gat
+    loss.backward()
+  File "/scratch/bz1030/anaconda3/envs/capstone/lib/python3.7/site-packages/torch/tensor.py", line 166, in backward
+    torch.autograd.backward(self, gradient, retain_graph, create_graph)
+  File "/scratch/bz1030/anaconda3/envs/capstone/lib/python3.7/site-packages/torch/autograd/__init__.py", line 99, in backward
+    allow_unreachable=True)  # allow_unreachable flag
+RuntimeError: CUDA out of memory. Tried to allocate 4.99 GiB (GPU 0; 22.38 GiB total capacity; 11.05 GiB already allocated; 1.48 GiB free; 9.31 GiB cached)

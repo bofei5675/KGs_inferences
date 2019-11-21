@@ -8,8 +8,8 @@
 
 source activate capstone
 cd ../
-python main.py --data ./data/drugbank_2191_new/ --pretrained_emb False\
- --output_folder ./checkpoints/drugbank2191__new/ \
+python main.py --data ./data/drugbank_1200/ --pretrained_emb False\
+ --output_folder ./checkpoints/drugbank_1200_2/ \
  --epochs_gat 800\
  --epochs_conv 200\
  --batch_size_conv 256 --batch_size_gat 80000
