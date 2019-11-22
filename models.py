@@ -28,15 +28,15 @@ class SpGAT(nn.Module):
                                                  alpha=alpha,
                                                  concat=True)
                            for _ in range(nheads)]
-
+        self.devices = [torch.device('cuda:0'), torch.device('cuda:1')]
         for i, attention in enumerate(self.attentions):
             self.add_module('attention_{}'.format(i), attention)
 
+
         # W matrix to convert h_input to h_output dimension
-        self.W = nn.Parameter(torch.zeros(size=(relation_dim, nheads * nhid)))
-        self.W = self.W.cuda(1)
-        nn.init.xavier_uniform_(self.W.data, gain=1.414)
         self.device = torch.device('cuda:1')
+        self.W = nn.Parameter(torch.zeros(size=(relation_dim, nheads * nhid))).to(self.device)
+        nn.init.xavier_uniform_(self.W.data, gain=1.414)
         self.out_att = SpGraphAttentionLayer(num_nodes, nhid * nheads,
                                              nheads * nhid, nheads * nhid,
                                              dropout=dropout,
@@ -47,7 +47,8 @@ class SpGAT(nn.Module):
 
     def forward(self, Corpus_, batch_inputs, entity_embeddings, relation_embed,
                 edge_list, edge_type, edge_embed, edge_list_nhop, edge_type_nhop):
-        x = entity_embeddings
+        relation_embed = relation_embed.to(self.device)
+        x = entity_embeddings.to(self.device)
         edge_embed_nhop = relation_embed[edge_type_nhop[:, 0]] + relation_embed[edge_type_nhop[:, 1]]
         #print(edge_embed_nhop.shape, edge_type_nhop[:, 0].shape, edge_type_nhop[:, 1].shape)
         #print('In SPGAT', edge_list_nhop.shape)
@@ -61,7 +62,7 @@ class SpGAT(nn.Module):
         #x = torch.cat([att(x, edge_list, edge_embed, edge_list_nhop, edge_embed_nhop)
         #               for att in self.attentions], dim=1)
         x = self.dropout_layer(x)
-
+        #print(relation_embed.device, self.W.device)
         out_relation_1 = relation_embed.mm(self.W)
 
         edge_embed = out_relation_1[edge_type]
@@ -100,21 +101,22 @@ class SpKBGATModified(nn.Module):
 
         self.drop_GAT = drop_GAT
         self.alpha = alpha      # For leaky relu
-
+        self.device = torch.device('cuda:0')
         self.final_entity_embeddings = nn.Parameter(
-            torch.randn(self.num_nodes, self.entity_out_dim_1 * self.nheads_GAT_1))
+            torch.randn(self.num_nodes, self.entity_out_dim_1 * self.nheads_GAT_1)).to(self.device)
 
         self.final_relation_embeddings = nn.Parameter(
-            torch.randn(self.num_relation, self.entity_out_dim_1 * self.nheads_GAT_1))
+            torch.randn(self.num_relation, self.entity_out_dim_1 * self.nheads_GAT_1)).to(self.device)
+        self.device2 = torch.device('cuda:1')
 
-        self.entity_embeddings = nn.Parameter(initial_entity_emb)
-        self.relation_embeddings = nn.Parameter(initial_relation_emb)
+        self.entity_embeddings = nn.Parameter(initial_entity_emb).to(self.device)
+        self.relation_embeddings = nn.Parameter(initial_relation_emb).to(self.device)
 
         self.sparse_gat_1 = SpGAT(self.num_nodes, self.entity_in_dim, self.entity_out_dim_1, self.relation_dim,
-                                  self.drop_GAT, self.alpha, self.nheads_GAT_1)
-        self.sparse_gat_1 = self.sparse_gat_1.cuda(1)
+                                  self.drop_GAT, self.alpha, self.nheads_GAT_1).to(self.device2)
+
         self.W_entities = nn.Parameter(torch.zeros(
-            size=(self.entity_in_dim, self.entity_out_dim_1 * self.nheads_GAT_1)))
+            size=(self.entity_in_dim, self.entity_out_dim_1 * self.nheads_GAT_1))).to(self.device)
         nn.init.xavier_uniform_(self.W_entities.data, gain=1.414)
 
     def forward(self, Corpus_, adj, batch_inputs, train_indices_nhop):
@@ -154,6 +156,7 @@ class SpKBGATModified(nn.Module):
         mask[mask_indices] = 1.0
 
         entities_upgraded = self.entity_embeddings.mm(self.W_entities)
+        # print(entities_upgraded.device, mask.device, out_entity_1.device)
         out_entity_1 = entities_upgraded + \
             mask.unsqueeze(-1).expand_as(out_entity_1) * out_entity_1
 

@@ -109,7 +109,8 @@ class SpGraphAttentionLayer(nn.Module):
         N = input.size()[0]
 
         # Self-attention on the nodes - Shared attention mechanism
-        print('BUG Happens here:',edge.shape, edge_list_nhop.shape, edge_embed.shape, edge_embed_nhop.shape)
+        #print('BUG Happens here:',edge.shape, edge_list_nhop.shape, edge_embed.shape, edge_embed_nhop.shape)
+
         if torch.cuda.device_count() > 1:
             edge = edge.cuda(1)
             edge_list_nhop = edge_list_nhop.cuda(1)
@@ -117,19 +118,22 @@ class SpGraphAttentionLayer(nn.Module):
             edge_embed_nhop = edge_embed_nhop.cuda(1)
             input = input.cuda(1)
 
-
         edge = torch.cat((edge[:, :], edge_list_nhop[:, :]), dim=1)
         edge_embed = torch.cat(
             (edge_embed[:, :], edge_embed_nhop[:, :]), dim=0)
-        print('edge embed', edge_embed.device)
+        #print('edge embed', edge_embed.device)
         #print('After bug', edge_embed.shape)
+        print('Memory Usage Before bug:')
+        print('1.Allocated:', round(torch.cuda.memory_allocated(0) / 1024 ** 3, 1), 'GB')
+        print('1.Cached:   ', round(torch.cuda.memory_cached(0) / 1024 ** 3, 1), 'GB')
+        print('2.Allocated:', round(torch.cuda.memory_allocated(1) / 1024 ** 3, 1), 'GB')
+        print('2.Cached:   ', round(torch.cuda.memory_cached(1) / 1024 ** 3, 1), 'GB')
         edge_h = torch.cat(
             (input[edge[0, :], :], input[edge[1, :], :], edge_embed[:, :]), dim=1).t()
 
-        edge_h.cuda(1)
         #print('After concat:',  edge_h.shape)
         # edge_h: (2*in_dim + nrela_dim) x E
-        print(edge_h.device, self.a.device)
+        # print(edge_h.device, self.a.device)
         edge_m = self.a.mm(edge_h)
         # edge_m: D * E
 
@@ -163,6 +167,8 @@ class SpGraphAttentionLayer(nn.Module):
         # h_prime: N x out
         h_prime = h_prime.cuda(0)
         assert not torch.isnan(h_prime).any()
+        del edge, edge_h
+        torch.cuda.empty_cache()
         if self.concat:
             # if this layer is not last layer,
             return F.elu(h_prime)

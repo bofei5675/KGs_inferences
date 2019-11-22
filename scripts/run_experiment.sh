@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 python main.py --data ./data/drugbank_100/ --pretrained_emb False
 
 

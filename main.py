@@ -20,6 +20,7 @@ import sys
 import logging
 import time
 import pickle
+import gc
 
 # %%
 # %%from torchviz import make_dot, make_dot_from_trace
@@ -40,7 +41,7 @@ def parse_args():
     args.add_argument("-data", "--data",
                       default="./data/WN18RR/", help="data directory")
     args.add_argument("-e_g", "--epochs_gat", type=int,
-                      default=8, help="Number of epochs")
+                      default=100, help="Number of epochs")
     args.add_argument("-e_c", "--epochs_conv", type=int,
                       default=2, help="Number of epochs")
     args.add_argument("-w_gat", "--weight_decay_gat", type=float,
@@ -60,7 +61,7 @@ def parse_args():
 
     # arguments for GAT
     args.add_argument("-b_gat", "--batch_size_gat", type=int,
-                      default=5000, help="Batch size for GAT")
+                      default=80000, help="Batch size for GAT")
     args.add_argument("-neg_s_gat", "--valid_invalid_ratio_gat", type=int,
                       default=2, help="Ratio of valid to invalid triples for GAT training")
     args.add_argument("-drop_GAT", "--drop_GAT", type=float,
@@ -70,7 +71,7 @@ def parse_args():
     args.add_argument("-out_dim", "--entity_out_dim", type=int, nargs='+',
                       default=[100, 200], help="Entity output embedding dimensions")
     args.add_argument("-h_gat", "--nheads_GAT", type=int, nargs='+',
-                      default=[2, 2], help="Multihead attention SpGAT")
+                      default=[1, 1], help="Multihead attention SpGAT")
     args.add_argument("-margin", "--margin", type=float,
                       default=5, help="Margin used in hinge loss")
 
@@ -207,7 +208,7 @@ def train_gat(args):
     if(args.use_2hop):
         current_batch_2hop_indices = Corpus_.get_batch_nhop_neighbors_all(args,
                                                                           Corpus_.unique_entities_train, node_neighbors_2hop)
-
+    device = torch.device('cuda:0')
     if CUDA:
         current_batch_2hop_indices = Variable(
             torch.LongTensor(current_batch_2hop_indices)).cuda()
@@ -227,14 +228,20 @@ def train_gat(args):
         model_gat.train()  # getting in training mode
         start_time = time.time()
         epoch_loss = []
-
+        if device.type == 'cuda':
+            print(torch.cuda.get_device_name(0), torch.cuda.get_device_name(1))
+            print('Memory Usage:')
+            print('1.Allocated:', round(torch.cuda.memory_allocated(0) / 1024 ** 3, 1), 'GB')
+            print('1.Cached:   ', round(torch.cuda.memory_cached(0) / 1024 ** 3, 1), 'GB')
+            print('2.Allocated:', round(torch.cuda.memory_allocated(1) / 1024 ** 3, 1), 'GB')
+            print('2.Cached:   ', round(torch.cuda.memory_cached(1) / 1024 ** 3, 1), 'GB')
         if len(Corpus_.train_indices) % args.batch_size_gat == 0:
             num_iters_per_epoch = len(
                 Corpus_.train_indices) // args.batch_size_gat
         else:
             num_iters_per_epoch = (
                 len(Corpus_.train_indices) // args.batch_size_gat) + 1
-
+        print(num_iters_per_epoch)
         for iters in range(num_iters_per_epoch):
             start_time_iter = time.time()
             train_indices, train_values = Corpus_.get_iteration_batch(iters)
@@ -251,7 +258,7 @@ def train_gat(args):
             # forward pass
             entity_embed, relation_embed = model_gat(
                 Corpus_, Corpus_.train_adj_matrix, train_indices, current_batch_2hop_indices)
-            print('Forward pass', entity_embed.shape, relation_embed.shape)
+            print('Forward pass', entity_embed.device, relation_embed.device)
             optimizer.zero_grad()
 
             loss = batch_gat_loss(
@@ -268,6 +275,9 @@ def train_gat(args):
                 iters, end_time_iter - start_time_iter, loss.data.item())
             print(line)
             write_to_file(args, line)
+            del entity_embed, relation_embed, loss
+            torch.cuda.empty_cache()
+            gc.collect()
 
         scheduler.step()
         line = "Epoch {} , average loss {} , epoch_time {}".format(
@@ -400,8 +410,8 @@ def evaluate_conv(args, unique_entities):
 
 
 print('CUDA device count', torch.cuda.device_count())
-print('CUDA device 1', torch.cuda.device('cuda:0'))
-print('CUDA device 2', torch.cuda.device('cuda:1'))
+print('CUDA device 1', torch.cuda.device('cuda:0'), torch.cuda.get_device_name(torch.device('cuda:0')))
+print('CUDA device 2', torch.cuda.device('cuda:1'), torch.cuda.get_device_name(torch.device('cuda:1')))
 train_gat(args)
 #train_conv(args)
 # evaluate_conv(args, Corpus_.unique_entities_train)
