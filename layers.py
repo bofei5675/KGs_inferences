@@ -80,7 +80,7 @@ class SpGraphAttentionLayer(nn.Module):
     Sparse version GAT layer, similar to https://arxiv.org/abs/1710.10903
     """
 
-    def __init__(self, num_nodes, in_features, out_features, nrela_dim, dropout, alpha, concat=True):
+    def __init__(self, num_nodes, in_features, out_features, nrela_dim, dropout, alpha, activation='tanh', concat=True):
         super(SpGraphAttentionLayer, self).__init__()
         self.in_features = in_features
         self.out_features = out_features
@@ -96,7 +96,12 @@ class SpGraphAttentionLayer(nn.Module):
         nn.init.xavier_normal_(self.a_2.data, gain=1.414)
 
         self.dropout = nn.Dropout(dropout)
-        self.leakyrelu = nn.LeakyReLU(self.alpha)
+
+        # self.leakyrelu = nn.LeakyReLU(self.alpha)
+        if activation == 'tanh':
+            self.leakyrelu = nn.Tanh()
+        elif activation == 'leakyrelu':
+            self.leakyrelu = nn.LeakyReLU(self.alpha)
         self.special_spmm_final = SpecialSpmmFinal()
 
     def forward(self, input, edge, edge_embed, edge_list_nhop, edge_embed_nhop):

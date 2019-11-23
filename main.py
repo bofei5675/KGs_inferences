@@ -70,7 +70,7 @@ def parse_args():
     args.add_argument("-out_dim", "--entity_out_dim", type=int, nargs='+',
                       default=[100, 200], help="Entity output embedding dimensions")
     args.add_argument("-h_gat", "--nheads_GAT", type=int, nargs='+',
-                      default=[2, 2], help="Multihead attention SpGAT")
+                      default=[1, 2], help="Multihead attention SpGAT")
     args.add_argument("-margin", "--margin", type=float,
                       default=5, help="Margin used in hinge loss")
 
@@ -85,6 +85,11 @@ def parse_args():
                       help="Number of output channels in conv layer")
     args.add_argument("-drop_conv", "--drop_conv", type=float,
                       default=0.0, help="Dropout probability for convolution layer")
+    args.add_argument("-load_conv", "--load_conv", type=str, default=None,
+                      dest='load_conv')
+    args.add_argument("-load_gat", "--load_gat", type=str, default=None,
+                      dest='load_gat')
+    args.add_argument("-tanh", "--tanh", type=str2bool, default='yes', dest='tanh')
 
     args = args.parse_args()
     return args
@@ -103,9 +108,16 @@ def load_data(args):
         args.data, is_unweigted=False, directed=False)
     print('Training size', len(train_data), 'Val size', len(validation_data), 'Test size', len(test_data))
     if args.pretrained_emb:
+        # no relation embedding for us now
         entity_embeddings, relation_embeddings = init_embeddings(os.path.join(args.data, 'entity2vec.txt'),
-                                                                 os.path.join(args.data, 'relation2vec.txt'))
-        print("Initialised relations and entities from TransE")
+                                                                 None)
+        if entity_embeddings.shape[0] == 0:
+            entity_embeddings = np.random.randn(
+                len(entity2id), args.embedding_size)
+        if relation_embeddings.shape[0] == 0:
+            relation_embeddings = np.random.randn(
+                len(relation2id), args.embedding_size)
+        print("Initialised relations and entities from SSP")
 
     else:
         entity_embeddings = np.random.randn(
@@ -190,8 +202,12 @@ def train_gat(args):
 
     print(
         "\nModel type -> GAT layer with {} heads used , Initital Embeddings training".format(args.nheads_GAT[0]))
-    model_gat = SpKBGATModified(entity_embeddings, relation_embeddings, args.entity_out_dim, args.entity_out_dim,
-                                args.drop_GAT, args.alpha, args.nheads_GAT)
+    if args.tanh:
+        model_gat = SpKBGATModified(entity_embeddings, relation_embeddings, args.entity_out_dim, args.entity_out_dim,
+                                    args.drop_GAT, args.alpha, args.nheads_GAT, 'tanh')
+    else:
+        model_gat = SpKBGATModified(entity_embeddings, relation_embeddings, args.entity_out_dim, args.entity_out_dim,
+                                    args.drop_GAT, args.alpha, args.nheads_GAT, 'leakyrelu')
 
     model_gat = nn.DataParallel(model_gat)
 
@@ -254,7 +270,7 @@ def train_gat(args):
             # forward pass
             entity_embed, relation_embed = model_gat(
                 Corpus_, Corpus_.train_adj_matrix, train_indices, current_batch_2hop_indices)
-            print('Forward pass', entity_embed.shape, relation_embed.shape)
+            # print('Forward pass', entity_embed.shape, relation_embed.shape)
             optimizer.zero_grad()
 
             loss = batch_gat_loss(
@@ -290,8 +306,12 @@ def train_conv(args):
     ####################################
 
     print("Defining model")
-    model_gat = SpKBGATModified(entity_embeddings, relation_embeddings, args.entity_out_dim, args.entity_out_dim,
-                                args.drop_GAT, args.alpha, args.nheads_GAT)
+    if args.tanh:
+        model_gat = SpKBGATModified(entity_embeddings, relation_embeddings, args.entity_out_dim, args.entity_out_dim,
+                                    args.drop_GAT, args.alpha, args.nheads_GAT, 'tanh')
+    else:
+        model_gat = SpKBGATModified(entity_embeddings, relation_embeddings, args.entity_out_dim, args.entity_out_dim,
+                                    args.drop_GAT, args.alpha, args.nheads_GAT, 'leakyrelu')
     print("Only Conv model trained")
     model_conv = SpKBGATConvOnly(entity_embeddings, relation_embeddings, args.entity_out_dim, args.entity_out_dim,
                                  args.drop_GAT, args.drop_conv, args.alpha, args.alpha_conv,
@@ -304,11 +324,13 @@ def train_conv(args):
         model_conv.cuda()
         model_gat.cuda()
 
-    model_gat.load_state_dict(torch.load(
-        '{}/trained_{}.pth'.format(args.output_folder + 'gat', args.epochs_gat - 1)))
+    model_gat.load_state_dict(torch.load(args.load_gat))
     if isinstance(model_conv, nn.DataParallel):
-        model_conv.module.final_entity_embeddings = model_gat.module.final_entity_embeddings
-        model_conv.module.final_relation_embeddings = model_gat.module.final_relation_embeddings
+        if args.load_conv is None:
+            model_conv.module.final_entity_embeddings = model_gat.module.final_entity_embeddings
+            model_conv.module.final_relation_embeddings = model_gat.module.final_relation_embeddings
+        else:
+            model_conv.load_state_dict(torch.load(args.load_conv))
     else:
         model_conv.final_entity_embeddings = model_gat.final_entity_embeddings
         model_conv.final_relation_embeddings = model_gat.final_relation_embeddings
@@ -403,7 +425,8 @@ def evaluate_conv(args, unique_entities):
             Corpus_.get_validation_pred(args, model_conv, unique_entities)
 
 
+if args.load_gat is None:
+    train_gat(args)
 
-train_gat(args)
 train_conv(args)
 evaluate_conv(args, Corpus_.unique_entities_train)

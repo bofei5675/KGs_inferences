@@ -9,7 +9,7 @@ CUDA = torch.cuda.is_available()  # checking cuda availability
 
 
 class SpGAT(nn.Module):
-    def __init__(self, num_nodes, nfeat, nhid, relation_dim, dropout, alpha, nheads):
+    def __init__(self, num_nodes, nfeat, nhid, relation_dim, dropout, alpha, nheads, activation):
         """
             Sparse version of GAT
             nfeat -> Entity Input Embedding dimensions
@@ -40,6 +40,7 @@ class SpGAT(nn.Module):
                                              nheads * nhid, nheads * nhid,
                                              dropout=dropout,
                                              alpha=alpha,
+                                             activation=activation,
                                              concat=False
                                              )
 
@@ -72,7 +73,7 @@ class SpGAT(nn.Module):
 
 class SpKBGATModified(nn.Module):
     def __init__(self, initial_entity_emb, initial_relation_emb, entity_out_dim, relation_out_dim,
-                 drop_GAT, alpha, nheads_GAT):
+                 drop_GAT, alpha, nheads_GAT, activation):
         '''Sparse version of KBGAT
         entity_in_dim -> Entity Input Embedding dimensions
         entity_out_dim  -> Entity Output Embedding dimensions, passed as a list
@@ -108,7 +109,7 @@ class SpKBGATModified(nn.Module):
         self.relation_embeddings = nn.Parameter(initial_relation_emb)
 
         self.sparse_gat_1 = SpGAT(self.num_nodes, self.entity_in_dim, self.entity_out_dim_1, self.relation_dim,
-                                  self.drop_GAT, self.alpha, self.nheads_GAT_1)
+                                  self.drop_GAT, self.alpha, self.nheads_GAT_1, activation)
 
         self.W_entities = nn.Parameter(torch.zeros(
             size=(self.entity_in_dim, self.entity_out_dim_1 * self.nheads_GAT_1)))
