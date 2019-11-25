@@ -93,6 +93,9 @@ def parse_args():
     args.add_argument("-drop_conv", "--drop_conv", type=float,
                       default=0.0, help="Dropout probability for convolution layer")
 
+    args.add_argument('--debug', default=False, action='store_true',
+                        help='debug mode')
+
     args = args.parse_args()
     return args
 
@@ -106,7 +109,7 @@ if not os.path.exists(args.output_folder):
 
 
 def load_data(args):
-    train_data, validation_data, test_data, entity2id, relation2id, args.id2entity, args.id2relation, headTailSelector, unique_entities_train = build_data(
+    train_data, validation_data, test_data, entity2id, relation2id, args.id2entity, args.id2relation, headTailSelector, unique_entities_train, unique_relations_train = build_data(
         args.data, is_unweigted=False, directed=False)
     print('Training size', len(train_data), 'Val size', len(validation_data), 'Test size', len(test_data))
     if args.pretrained_emb:
@@ -122,7 +125,7 @@ def load_data(args):
         print("Initialised relations and entities randomly")
 
     corpus = Corpus(args, train_data, validation_data, test_data, entity2id, relation2id, headTailSelector,
-                    args.batch_size_gat, args.valid_invalid_ratio_gat, unique_entities_train, args.get_2hop)
+                    args.batch_size_gat, args.valid_invalid_ratio_gat, unique_entities_train, unique_relations_train, args.get_2hop)
 
     return corpus, torch.FloatTensor(entity_embeddings), torch.FloatTensor(relation_embeddings)
 
@@ -245,7 +248,8 @@ def train_gat(args):
         else:
             num_iters_per_epoch = (
                 len(Corpus_.train_indices) // args.batch_size_gat) + 1
-
+        if args.debug:
+            pass
         for iters in range(num_iters_per_epoch):
             start_time_iter = time.time()
             train_indices, train_values = Corpus_.get_iteration_batch(iters)
@@ -290,88 +294,14 @@ def train_gat(args):
 
         save_model(model_gat, args.data, epoch,
                    args.output_folder + 'gat/')
-    final_entity_embeddings = model_gat.module.final_entity_embeddings.detach().numpy()
-    final_relation_embeddings = model_gat.module.final_relation_embeddings.detach().numpy()
+    if CUDA:
+        final_entity_embeddings = model_gat.module.final_entity_embeddings.cpu().detach().numpy()
+        final_relation_embeddings = model_gat.module.final_relation_embeddings.cpu().detach().numpy()
+
+    else:
+        final_entity_embeddings = model_gat.module.final_entity_embeddings.detach().numpy()
+        final_relation_embeddings = model_gat.module.final_relation_embeddings.detach().numpy()
     save_mbeddings(args, final_entity_embeddings, final_relation_embeddings)
-
-def evaluate_gat(args):
-
-    model_gat = SpKBGATModified(entity_embeddings, relation_embeddings, args.entity_out_dim, args.entity_out_dim,
-                                args.drop_GAT, args.alpha, args.nheads_GAT)
-
-    model_gat = nn.DataParallel(model_gat)
-    model_gat.load_state_dict(torch.load(
-        '{0}/gat/trained_{1}.pth'.format(args.output_folder, args.epochs_gat - 1)))
-    final_entity_embeddings = model_gat.module.final_entity_embeddings.detach.numpy()
-    final_relation_embeddings = model_gat.final_relation_embeddings.detach.numpy()
-    ### generate negative samples
-#     train_neg_edges = generate_neg_edges(original_graph, len(train_graph.edges()), seed)
-#
-#     # create a auxiliary graph to ensure that testing negative edges will not used in training
-#     G_aux = copy.deepcopy(original_graph)
-#     G_aux.add_edges_from(train_neg_edges)
-#     test_neg_edges = generate_neg_edges(G_aux, len(test_pos_edges), seed)
-#
-#     # construct X_train, y_train, X_test, y_test
-#     X_train = []
-#     y_train = []
-#     for edge in train_graph.edges():
-#         node_u_emb = embedding_look_up[edge[0]]
-#         node_v_emb = embedding_look_up[edge[1]]
-#         feature_vector = np.append(node_u_emb, node_v_emb)
-#         X_train.append(feature_vector)
-#         y_train.append(1)
-#     for edge in train_neg_edges:
-#         node_u_emb = embedding_look_up[edge[0]]
-#         node_v_emb = embedding_look_up[edge[1]]
-#         feature_vector = np.append(node_u_emb, node_v_emb)
-#         X_train.append(feature_vector)
-#         y_train.append(0)
-#
-#     X_test = []
-#     y_test = []
-#     for edge in test_pos_edges:
-#         node_u_emb = embedding_look_up[edge[0]]
-#         node_v_emb = embedding_look_up[edge[1]]
-#         feature_vector = np.append(node_u_emb, node_v_emb)
-#         X_test.append(feature_vector)
-#         y_test.append(1)
-#     for edge in test_neg_edges:
-#         node_u_emb = embedding_look_up[edge[0]]
-#         node_v_emb = embedding_look_up[edge[1]]
-#         feature_vector = np.append(node_u_emb, node_v_emb)
-#         X_test.append(feature_vector)
-#         y_test.append(0)
-#
-#     # shuffle for training and testing
-#     c = list(zip(X_train, y_train))
-#     random.shuffle(c)
-#     X_train, y_train = zip(*c)
-#
-#     c = list(zip(X_test, y_test))
-#     random.shuffle(c)
-#     X_test, y_test = zip(*c)
-#
-#     X_train = np.array(X_train)
-#     y_train = np.array(y_train)
-#
-#     X_test = np.array(X_test)
-#     y_test = np.array(y_test)
-#
-#     clf1 = LogisticRegression(random_state=seed, solver='lbfgs')
-#     clf1.fit(X_train, y_train)
-#     y_pred_proba = clf1.predict_proba(X_test)[:, 1]
-#     y_pred = clf1.predict(X_test)
-#     auc_roc = roc_auc_score(y_test, y_pred_proba)
-#     auc_pr = average_precision_score(y_test, y_pred_proba)
-#     accuracy = accuracy_score(y_test, y_pred)
-#     f1 = f1_score(y_test, y_pred)
-#     print('#' * 9 + ' Link Prediction Performance ' + '#' * 9)
-#     print(f'AUC-ROC: {auc_roc:.3f}, AUC-PR: {auc_pr:.3f}, Accuracy: {accuracy:.3f}, F1: {f1:.3f}')
-#     print('#' * 50)
-#     return auc_roc, auc_pr, accuracy, f1
-
-
 
 def train_conv(args):
 
@@ -480,20 +410,23 @@ def evaluate_conv(args, unique_entities):
                                  args.drop_GAT, args.drop_conv, args.alpha, args.alpha_conv,
                                  args.nheads_GAT, args.out_channels)
     model_conv = nn.DataParallel(model_conv)
-    model_conv.load_state_dict(torch.load(
-        '{0}conv/trained_{1}.pth'.format(args.output_folder, args.epochs_conv - 1)))
 
     if CUDA:
+        model_conv.load_state_dict(torch.load(
+            '{0}conv/trained_{1}.pth'.format(args.output_folder, args.epochs_conv - 1)))
         model_conv.cuda()
+    else:
+        model_conv.load_state_dict(torch.load(
+            '{0}conv/trained_{1}.pth'.format(args.output_folder, args.epochs_conv - 1), map_location = torch.device('cpu')))
     model_conv.eval()
     with torch.no_grad():
         if isinstance(model_conv, nn.DataParallel):
-            Corpus_.get_validation_pred(args, model_conv.module, unique_entities)
+            Corpus_.get_validation_pred_relation(args, model_conv.module, unique_entities)
         else:
-            Corpus_.get_validation_pred(args, model_conv, unique_entities)
+            Corpus_.get_validation_pred_relation(args, model_conv, unique_entities)
 
 
 
 train_gat(args)
-#train_conv(args)
-evaluate_gat(args)
+train_conv(args)
+evaluate_conv(args, Corpus_.unique_relations_train)
