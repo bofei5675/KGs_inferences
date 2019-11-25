@@ -140,4 +140,4 @@ def build_data(path='./data/WN18RR/', is_unweigted=False, directed=True):
             (right_entity_avg[i] + left_entity_avg[i])
 
     return (train_triples, train_adjacency_mat), (validation_triples, valid_adjacency_mat), (test_triples, test_adjacency_mat), \
-        entity2id, relation2id, headTailSelector, unique_entities_train
+        entity2id, relation2id, id2entity, id2relation, headTailSelector, unique_entities_train

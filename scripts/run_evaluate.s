@@ -8,4 +8,4 @@
 
 source activate capstone
 cd ../
-python evaluate.py --data ./data/drugbank_1000/ --pretrained_emb False
+python evaluate.py --data ./data/drugbank_1861/

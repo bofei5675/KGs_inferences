@@ -1,5 +1,7 @@
 *.pickle
 *.pth
+*.out
+data/
 __pycache__/
 wn_test
 screenlog.0

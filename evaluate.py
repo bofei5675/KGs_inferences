@@ -53,7 +53,7 @@ def parse_args():
     args.add_argument("-u2hop", "--use_2hop", type=bool, default=True)
     args.add_argument("-p2hop", "--partial_2hop", type=bool, default=False)
     args.add_argument("-outfolder", "--output_folder",
-                      default="./checkpoints/wn/out/", help="Folder name to save the models.")
+                      default="./", help="Folder name to save the models.")
 
     # arguments for GAT
     args.add_argument("-b_gat", "--batch_size_gat", type=int,
@@ -67,7 +67,7 @@ def parse_args():
     args.add_argument("-out_dim", "--entity_out_dim", type=int, nargs='+',
                       default=[100, 200], help="Entity output embedding dimensions")
     args.add_argument("-h_gat", "--nheads_GAT", type=int, nargs='+',
-                      default=[2, 2], help="Multihead attention SpGAT")
+                      default=[1, 2], help="Multihead attention SpGAT")
     args.add_argument("-margin", "--margin", type=float,
                       default=5, help="Margin used in hinge loss")
 
@@ -91,7 +91,7 @@ args = parse_args()
 # %%
 print('Using pretrained:', args.pretrained_emb)
 def load_data(args):
-    train_data, validation_data, test_data, entity2id, relation2id, headTailSelector, unique_entities_train = build_data(
+    train_data, validation_data, test_data, entity2id, relation2id, _, _, headTailSelector, unique_entities_train = build_data(
         args.data, is_unweigted=False, directed=False)
     print('Training size', len(train_data), 'Val size', len(validation_data), 'Test size', len(test_data))
     if args.pretrained_emb:
@@ -117,7 +117,7 @@ def evaluate_conv(args, unique_entities):
                                  args.drop_GAT, args.drop_conv, args.alpha, args.alpha_conv,
                                  args.nheads_GAT, args.out_channels)
     model_conv = nn.DataParallel(model_conv)
-    model_conv.load_state_dict(torch.load('/scratch/bz1030/relationPrediction/checkpoints/drugbank1000_3/convKB_81.pth'))
+    model_conv.load_state_dict(torch.load('/scratch/bz1030/relationPrediction/checkpoints/drugbank1861/conv/trained_51.pth'))
 
     model_conv.cuda()
     model_conv.eval()
@@ -126,6 +126,7 @@ def evaluate_conv(args, unique_entities):
             Corpus_.get_validation_pred(args, model_conv.module, unique_entities)
         else:
             Corpus_.get_validation_pred(args, model_conv, unique_entities)
+
 
 if __name__ == '__main__':
     Corpus_, entity_embeddings, relation_embeddings = load_data(args)

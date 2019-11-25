@@ -20,6 +20,13 @@ import sys
 import logging
 import time
 import pickle
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import accuracy_score, average_precision_score, f1_score, roc_auc_score
+from sklearn.multiclass import OneVsRestClassifier
+from sklearn.preprocessing import MultiLabelBinarizer
+from tools import save_mbeddings
+
+seed = 141
 
 # %%
 # %%from torchviz import make_dot, make_dot_from_trace
@@ -51,7 +58,7 @@ def parse_args():
                       default=False, help="Use pretrained embeddings")
     args.add_argument("-emb_size", "--embedding_size", type=int,
                       default=50, help="Size of embeddings (if pretrained not used)")
-    args.add_argument("-l", "--lr", type=float, default=1e-3)
+    args.add_argument("-l", "--lr", type=float, default=1e-4)
     args.add_argument("-g2hop", "--get_2hop", type=bool, default=True)
     args.add_argument("-u2hop", "--use_2hop", type=bool, default=True)
     args.add_argument("-p2hop", "--partial_2hop", type=bool, default=False)
@@ -104,7 +111,7 @@ if not os.path.exists(args.output_folder):
 
 
 def load_data(args):
-    train_data, validation_data, test_data, entity2id, relation2id, headTailSelector, unique_entities_train = build_data(
+    train_data, validation_data, test_data, entity2id, relation2id, args.id2entity, args.id2relation, headTailSelector, unique_entities_train = build_data(
         args.data, is_unweigted=False, directed=False)
     print('Training size', len(train_data), 'Val size', len(validation_data), 'Test size', len(test_data))
     if args.pretrained_emb:
@@ -180,8 +187,9 @@ def batch_gat_loss(gat_loss_func, train_indices, entity_embed, relation_embed):
 
     x = source_embeds + relation_embeds - tail_embeds
     neg_norm = torch.norm(x, p=1, dim=1)
-
-    y = -torch.ones(int(args.valid_invalid_ratio_gat) * len_pos_triples).cuda()
+    y = -torch.ones(int(args.valid_invalid_ratio_gat) * len_pos_triples)
+    if CUDA:
+        y = y.cuda()
 
     loss = gat_loss_func(pos_norm, neg_norm, y)
     return loss
@@ -298,6 +306,87 @@ def train_gat(args):
 
         save_model(model_gat, args.data, epoch,
                    args.output_folder + 'gat/')
+    final_entity_embeddings = model_gat.module.final_entity_embeddings.detach().numpy()
+    final_relation_embeddings = model_gat.module.final_relation_embeddings.detach().numpy()
+    save_mbeddings(args, final_entity_embeddings, final_relation_embeddings)
+
+def evaluate_gat(args):
+
+    model_gat = SpKBGATModified(entity_embeddings, relation_embeddings, args.entity_out_dim, args.entity_out_dim,
+                                args.drop_GAT, args.alpha, args.nheads_GAT)
+
+    model_gat = nn.DataParallel(model_gat)
+    model_gat.load_state_dict(torch.load(
+        '{0}/gat/trained_{1}.pth'.format(args.output_folder, args.epochs_gat - 1)))
+    final_entity_embeddings = model_gat.module.final_entity_embeddings.detach.numpy()
+    final_relation_embeddings = model_gat.final_relation_embeddings.detach.numpy()
+    ### generate negative samples
+#     train_neg_edges = generate_neg_edges(original_graph, len(train_graph.edges()), seed)
+#
+#     # create a auxiliary graph to ensure that testing negative edges will not used in training
+#     G_aux = copy.deepcopy(original_graph)
+#     G_aux.add_edges_from(train_neg_edges)
+#     test_neg_edges = generate_neg_edges(G_aux, len(test_pos_edges), seed)
+#
+#     # construct X_train, y_train, X_test, y_test
+#     X_train = []
+#     y_train = []
+#     for edge in train_graph.edges():
+#         node_u_emb = embedding_look_up[edge[0]]
+#         node_v_emb = embedding_look_up[edge[1]]
+#         feature_vector = np.append(node_u_emb, node_v_emb)
+#         X_train.append(feature_vector)
+#         y_train.append(1)
+#     for edge in train_neg_edges:
+#         node_u_emb = embedding_look_up[edge[0]]
+#         node_v_emb = embedding_look_up[edge[1]]
+#         feature_vector = np.append(node_u_emb, node_v_emb)
+#         X_train.append(feature_vector)
+#         y_train.append(0)
+#
+#     X_test = []
+#     y_test = []
+#     for edge in test_pos_edges:
+#         node_u_emb = embedding_look_up[edge[0]]
+#         node_v_emb = embedding_look_up[edge[1]]
+#         feature_vector = np.append(node_u_emb, node_v_emb)
+#         X_test.append(feature_vector)
+#         y_test.append(1)
+#     for edge in test_neg_edges:
+#         node_u_emb = embedding_look_up[edge[0]]
+#         node_v_emb = embedding_look_up[edge[1]]
+#         feature_vector = np.append(node_u_emb, node_v_emb)
+#         X_test.append(feature_vector)
+#         y_test.append(0)
+#
+#     # shuffle for training and testing
+#     c = list(zip(X_train, y_train))
+#     random.shuffle(c)
+#     X_train, y_train = zip(*c)
+#
+#     c = list(zip(X_test, y_test))
+#     random.shuffle(c)
+#     X_test, y_test = zip(*c)
+#
+#     X_train = np.array(X_train)
+#     y_train = np.array(y_train)
+#
+#     X_test = np.array(X_test)
+#     y_test = np.array(y_test)
+#
+#     clf1 = LogisticRegression(random_state=seed, solver='lbfgs')
+#     clf1.fit(X_train, y_train)
+#     y_pred_proba = clf1.predict_proba(X_test)[:, 1]
+#     y_pred = clf1.predict(X_test)
+#     auc_roc = roc_auc_score(y_test, y_pred_proba)
+#     auc_pr = average_precision_score(y_test, y_pred_proba)
+#     accuracy = accuracy_score(y_test, y_pred)
+#     f1 = f1_score(y_test, y_pred)
+#     print('#' * 9 + ' Link Prediction Performance ' + '#' * 9)
+#     print(f'AUC-ROC: {auc_roc:.3f}, AUC-PR: {auc_pr:.3f}, Accuracy: {accuracy:.3f}, F1: {f1:.3f}')
+#     print('#' * 50)
+#     return auc_roc, auc_pr, accuracy, f1
+
 
 
 def train_conv(args):
@@ -387,6 +476,8 @@ def train_conv(args):
             loss = margin_loss(preds.view(-1), train_values.view(-1))
 
             loss.backward()
+            for param in model_conv.parameters():
+                param.grad.data.clamp_(-1, 1)
             optimizer.step()
 
             epoch_loss.append(loss.data.item())
@@ -416,7 +507,8 @@ def evaluate_conv(args, unique_entities):
     model_conv.load_state_dict(torch.load(
         '{0}conv/trained_{1}.pth'.format(args.output_folder, args.epochs_conv - 1)))
 
-    model_conv.cuda()
+    if CUDA:
+        model_conv.cuda()
     model_conv.eval()
     with torch.no_grad():
         if isinstance(model_conv, nn.DataParallel):
@@ -430,3 +522,4 @@ if args.load_gat is None:
 
 train_conv(args)
 evaluate_conv(args, Corpus_.unique_entities_train)
+# evaluate_gat(args)
