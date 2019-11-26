@@ -5,10 +5,15 @@ import time
 import queue
 import random
 
+from torch.nn.functional import softmax
 
+from sklearn.metrics import accuracy_score, average_precision_score, f1_score, roc_auc_score
+from sklearn.preprocessing import label_binarize
+import time
+import os
 class Corpus:
     def __init__(self, args, train_data, validation_data, test_data, entity2id,
-                 relation2id, headTailSelector, batch_size, valid_to_invalid_samples_ratio, unique_entities_train, get_2hop=False):
+                 relation2id, headTailSelector, batch_size, valid_to_invalid_samples_ratio, unique_entities_train, unique_relations_train, get_2hop=False):
         self.train_triples = train_data[0]
 
         # Converting to sparse tensor
@@ -37,6 +42,8 @@ class Corpus:
 
         self.unique_entities_train = [self.entity2id[i]
                                       for i in unique_entities_train]
+        self.unique_relations_train = [self.relation2id[i]
+                                      for i in unique_relations_train]
 
         self.train_indices = np.array(
             list(self.train_triples)).astype(np.int32)
@@ -339,6 +346,7 @@ class Corpus:
 
         return np.array(batch_source_triples).astype(np.int32)
 
+
     def transe_scoring(self, batch_inputs, entity_embeddings, relation_embeddings):
         source_embeds = entity_embeddings[batch_inputs[:, 0]]
         relation_embeds = relation_embeddings[batch_inputs[:, 1]]
@@ -354,7 +362,7 @@ class Corpus:
         average_hits_at_one_head, average_hits_at_one_tail = [], []
         average_mean_rank_head, average_mean_rank_tail = [], []
         average_mean_recip_rank_head, average_mean_recip_rank_tail = [], []
-        log=open(args.output_folder + 'eval.txt', 'w')
+        log=open(args.output_folder + 'eval.txt', 'w+')
         for iters in range(1):
             start_time = time.time()
 
@@ -622,3 +630,161 @@ class Corpus:
         print("Hits@1 are {}".format(cumulative_hits_one), file=log)
         print("Mean rank {}".format(cumulative_mean_rank), file=log)
         print("Mean Reciprocal Rank {}".format(cumulative_mean_recip_rank), file=log)
+
+    def get_validation_pred_relation(self, args, model, unique_relations):
+        average_hits_at_100 = []
+        average_hits_at_ten = []
+        average_hits_at_three = []
+        average_hits_at_one = []
+        average_mean_ranks = []
+        average_mean_recip_ranks = []
+        log = open(args.output_folder + 'relation_eval.txt', 'w+')
+        y_true = self.test_indices[:, 1]
+        y_predict = []
+        if not os.path.exists(args.output_folder):
+            os.makedirs(args.output_folder + 'output_scores/')
+
+        for iters in range(1):
+            start_time = time.time()
+            print('Total Relation,', len(self.relation2id))
+            time.sleep(3)
+            indices = [i for i in range(len(self.test_indices))]
+
+            batch_indices = self.test_indices[indices, :]
+            print("Sampled indices")
+            print("test set length ", len(self.test_indices))
+            relation_list = [j for i, j in self.relation2id.items()]
+
+            ranks = []
+            reciprocal_ranks = []
+            hits_at_100 = 0
+            hits_at_ten = 0
+            hits_at_three = 0
+            hits_at_one = 0
+            dataset = []
+            for i in range(batch_indices.shape[0]):
+                start_time_it = time.time()
+                new_x_batch = np.tile(
+                    batch_indices[i, :], (len(self.relation2id), 1))
+
+                if(batch_indices[i, 1] not in unique_relations):
+                    continue
+
+                new_x_batch[:, 1] = relation_list
+
+                last_index = []  # array of already existing triples
+                for tmp_index in range(len(new_x_batch)):
+                    temp_triple = (new_x_batch[tmp_index][0], new_x_batch[tmp_index][1],
+                                        new_x_batch[tmp_index][2])
+                    # remove invalid
+                    if temp_triple in self.valid_triples_dict.keys():
+                        last_index.append(tmp_index)
+
+                # Deleting already existing triples, leftover triples are invalid, according
+                # to train, validation and test data
+                # Note, all of them maynot be actually invalid
+                new_x_batch = np.delete(
+                    new_x_batch, last_index, axis=0)
+
+
+                # adding the current valid triples to the top, i.e, index 0
+                new_x_batch = np.insert(
+                    new_x_batch, 0, batch_indices[i], axis=0)
+                import math
+                # Have to do this, because it doesn't fit in memory
+                scores = model.batch_test(new_x_batch)
+                batch_values = np.zeros((new_x_batch.shape[0], new_x_batch.shape[1] + 2))
+                batch_values[:, :-2] = new_x_batch
+                batch_values[:, -2] = scores.cpu().detach().numpy().reshape(1, -1)
+                batch_values[:, -1] = [1] + [0] * (new_x_batch.shape[0] - 1) # give label
+                dataset.append(batch_values)
+                softmax_scores = softmax(scores, dim=0).transpose(0,1).cpu().detach().numpy()
+                if len(new_x_batch) < 30:
+                    for ele in last_index :
+                        if ele != batch_indices[i][1]:
+                            softmax_scores = np.insert(
+                        softmax_scores, ele, np.mean(softmax_scores[0][1:]), axis=1)
+                y_predict.append(softmax_scores)
+
+                sorted_scores, sorted_indices = torch.sort(
+                    scores.view(-1), dim=-1, descending=True)
+                # Just search for zeroth index in the sorted scores, we appended valid triple at top
+                ranks.append(
+                    np.where(sorted_indices.cpu().detach().numpy() == 0)[0][0] + 1)
+                reciprocal_ranks.append(1.0 / ranks[-1])
+
+                # avoid slowdown computation
+                if len(dataset) == 500:
+                    dataset = np.vstack(dataset)
+                    np.savetxt(args.output_folder + 'output_scores/' + 'tuples_scores{}.csv'.format(i),
+                               dataset,
+                               delimiter=',')
+                    dataset = []
+
+
+            for i in range(len(ranks)):
+                if ranks[i] <= 100:
+                    hits_at_100 = hits_at_100 + 1
+                if ranks[i] <= 10:
+                    hits_at_ten = hits_at_ten + 1
+                if ranks[i] <= 3:
+                    hits_at_three = hits_at_three + 1
+                if ranks[i] == 1:
+                    hits_at_one = hits_at_one + 1
+
+            assert len(ranks) == len(reciprocal_ranks)
+            print("here {}".format(len(ranks)), file=log)
+            print("\nCurrent iteration time {}".format(time.time() - start_time), file=log)
+            print("Stats for replacing relations are -> ", file=log)
+            print("Current iteration Hits@100 are {}".format(
+                hits_at_100 / float(len(ranks))), file=log)
+            print("Current iteration Hits@10 are {}".format(
+                hits_at_ten / len(ranks)), file=log)
+            print("Current iteration Hits@3 are {}".format(
+                hits_at_three / len(ranks)), file=log)
+            print("Current iteration Hits@1 are {}".format(
+                hits_at_one / len(ranks)), file=log)
+            print("Current iteration Mean rank {}".format(
+                sum(ranks) / len(ranks)), file=log)
+            print("Current iteration Mean Reciprocal Rank {}".format(
+                sum(reciprocal_ranks) / len(reciprocal_ranks)), file=log)
+
+            average_hits_at_100.append(
+                hits_at_100 / len(ranks))
+            average_hits_at_ten.append(
+                hits_at_ten / len(ranks))
+            average_hits_at_three.append(
+                hits_at_three / len(ranks))
+            average_hits_at_one.append(
+                hits_at_one / len(ranks))
+            average_mean_ranks.append(sum(ranks) / len(ranks))
+            average_mean_recip_ranks.append(
+                sum(reciprocal_ranks) / len(reciprocal_ranks))
+
+        print("\nAveraged stats for replacing relationship are -> ", file=log)
+        print("Hits@100 are {}".format(
+            sum(average_hits_at_100) / len(average_hits_at_100)), file=log)
+        print("Hits@10 are {}".format(
+            sum(average_hits_at_ten) / len(average_hits_at_ten)), file=log)
+        print("Hits@3 are {}".format(
+            sum(average_hits_at_three) / len(average_hits_at_three)), file=log)
+        print("Hits@1 are {}".format(
+            sum(average_hits_at_one) / len(average_hits_at_one)), file=log)
+        print("Mean rank {}".format(
+            sum(average_mean_ranks) / len(average_mean_ranks)), file=log)
+        print("Mean Reciprocal Rank {}".format(
+            sum(average_mean_recip_ranks) / len(average_mean_recip_ranks)), file=log)
+
+        y_predict = np.vstack(y_predict)
+        y_true = label_binarize(y_true, classes=unique_relations)
+        drop_idx = np.where(np.sum(y_true, axis=0) == 0)
+        y_true = np.delete(y_true, drop_idx, axis=1)
+        y_predict = np.delete(y_predict, drop_idx, axis=1)
+        auc_roc = roc_auc_score(y_true, y_predict)
+        auc_pr = average_precision_score(y_true, y_predict)
+
+        print('#' * 9 + ' Link Prediction Performance ' + '#' * 9, file=log)
+        print(f'AUC-ROC: {auc_roc:.3f}, AUC-PR: {auc_pr:.3f}', file=log)
+        print('#' * 50, file=log)
+
+

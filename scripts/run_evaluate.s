@@ -8,4 +8,6 @@
 
 source activate capstone
 cd ../
-python evaluate.py --data ./data/drugbank_1861/
+python evaluate.py --data ./data/drugbank_100_new/ \
+--output_folder /scratch/bz1030/relationPrediction/checkpoints/drugbank100_new/
+

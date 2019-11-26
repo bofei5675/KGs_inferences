@@ -17,6 +17,7 @@ class ConvKB(nn.Module):
             in_channels, out_channels, (1, input_seq_len))  # kernel size -> 1*input_seq_length(i.e. 2)
         self.dropout = nn.Dropout(drop_prob)
         self.non_linearity = nn.ReLU()
+        self.norm = nn.BatchNorm2d(out_channels)
         self.fc_layer = nn.Linear((input_dim) * out_channels, 1)
 
         nn.init.xavier_uniform_(self.fc_layer.weight, gain=1.414)
@@ -30,10 +31,9 @@ class ConvKB(nn.Module):
         # batch * length(which is 3 here -> entity,relation,entity) * dim
         # To make tensor of size 4, where second dim is for input channels
         conv_input = conv_input.unsqueeze(1)
-
-        out_conv = self.dropout(
-            self.non_linearity(self.conv_layer(conv_input)))
-
+        out_conv = self.non_linearity(self.conv_layer(conv_input))
+        out_conv = self.norm(out_conv)
+        out_conv = self.dropout(out_conv)
         input_fc = out_conv.squeeze(-1).view(batch_size, -1)
         output = self.fc_layer(input_fc)
         return output

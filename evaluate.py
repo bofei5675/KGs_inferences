@@ -67,7 +67,7 @@ def parse_args():
     args.add_argument("-out_dim", "--entity_out_dim", type=int, nargs='+',
                       default=[100, 200], help="Entity output embedding dimensions")
     args.add_argument("-h_gat", "--nheads_GAT", type=int, nargs='+',
-                      default=[1, 2], help="Multihead attention SpGAT")
+                      default=[2, 2], help="Multihead attention SpGAT")
     args.add_argument("-margin", "--margin", type=float,
                       default=5, help="Margin used in hinge loss")
 
@@ -91,7 +91,7 @@ args = parse_args()
 # %%
 print('Using pretrained:', args.pretrained_emb)
 def load_data(args):
-    train_data, validation_data, test_data, entity2id, relation2id, _, _, headTailSelector, unique_entities_train = build_data(
+    train_data, validation_data, test_data, entity2id, relation2id, args.id2entity, args.id2relation, headTailSelector, unique_entities_train, unique_relations_train = build_data(
         args.data, is_unweigted=False, directed=False)
     print('Training size', len(train_data), 'Val size', len(validation_data), 'Test size', len(test_data))
     if args.pretrained_emb:
@@ -107,21 +107,32 @@ def load_data(args):
         print("Initialised relations and entities randomly")
 
     corpus = Corpus(args, train_data, validation_data, test_data, entity2id, relation2id, headTailSelector,
-                    args.batch_size_gat, args.valid_invalid_ratio_gat, unique_entities_train, args.get_2hop)
+                    args.batch_size_gat, args.valid_invalid_ratio_gat, unique_entities_train, unique_relations_train,
+                    args.get_2hop)
 
     return corpus, torch.FloatTensor(entity_embeddings), torch.FloatTensor(relation_embeddings)
 
 
-def evaluate_conv(args, unique_entities):
+def evaluate_conv(args, unique_entities,load_model):
+    CUDA = torch.cuda.is_available()
     model_conv = SpKBGATConvOnly(entity_embeddings, relation_embeddings, args.entity_out_dim, args.entity_out_dim,
                                  args.drop_GAT, args.drop_conv, args.alpha, args.alpha_conv,
                                  args.nheads_GAT, args.out_channels)
     model_conv = nn.DataParallel(model_conv)
-    model_conv.load_state_dict(torch.load('/scratch/bz1030/relationPrediction/checkpoints/drugbank1861/conv/trained_51.pth'))
+    if CUDA:
+        model_conv.load_state_dict(torch.load(load_model))
+        model_conv.cuda()
+    else:
+        model_conv.load_state_dict(torch.load(load_model),
+            map_location=torch.device('cpu'))
 
-    model_conv.cuda()
     model_conv.eval()
     with torch.no_grad():
+        if isinstance(model_conv, nn.DataParallel):
+            Corpus_.get_validation_pred_relation(args, model_conv.module, unique_entities)
+        else:
+            Corpus_.get_validation_pred_relation(args, model_conv, unique_entities)
+
         if isinstance(model_conv, nn.DataParallel):
             Corpus_.get_validation_pred(args, model_conv.module, unique_entities)
         else:
@@ -131,12 +142,5 @@ def evaluate_conv(args, unique_entities):
 if __name__ == '__main__':
     Corpus_, entity_embeddings, relation_embeddings = load_data(args)
     print('Load model ...')
-    #model_gat = SpKBGATModified(entity_embeddings, relation_embeddings, args.entity_out_dim, args.entity_out_dim,
-    #                            args.drop_GAT, args.alpha, args.nheads_GAT)
-
-    #model_gat = nn.DataParallel(model_gat)
-    #model_gat.load_state_dict(
-       # torch.load('/scratch/bz1030/relationPrediction/checkpoints/drugbank1000_2/trained_463.pth'))
-    #entity_embeddings = model_gat.module.entity_embeddings
-    #print(entity_embeddings)
-    evaluate_conv(args, Corpus_.unique_entities_train)
+    load_model = '/scratch/bz1030/relationPrediction/checkpoints/drugbank100_new/conv/trained_99.pth'
+    evaluate_conv(args, Corpus_.unique_entities_train, load_model)

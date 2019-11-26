@@ -8,13 +8,12 @@
 
 source activate capstone
 cd ../
-python main.py --data ./data/deepddi/ --pretrained_emb False\
+python main.py --data ./data/deepddi/ --pretrained_emb no\
  --output_folder ./checkpoints/deepddi_tanh/ \
- --epochs_gat 900\
+ --epochs_gat 300\
  --epochs_conv 300\
- --batch_size_conv 512 --batch_size_gat 80000\
- --load_conv /scratch/bz1030/relationPrediction/checkpoints/deepddi_tanh/conv/trained_11.pth\
  --load_gat /scratch/bz1030/relationPrediction/checkpoints/deepddi_tanh/gat/trained_899.pth\
+ --batch_size_conv 512 --batch_size_gat 80000\
  --tanh yes
 
 

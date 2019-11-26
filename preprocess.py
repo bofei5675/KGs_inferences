@@ -58,10 +58,12 @@ def load_data(filename, entity2id, relation2id, is_unweigted=False, directed=Tru
     # type they are connected with
     rows, cols, data = [], [], []
     unique_entities = set()
+    unique_relations = set()
     for line in lines:
         e1, relation, e2 = parse_line(line)
         unique_entities.add(e1)
         unique_entities.add(e2)
+        unique_relations.add(relation)
         triples_data.append(
             (entity2id[e1], relation2id[relation], entity2id[e2]))
         if not directed:
@@ -82,7 +84,7 @@ def load_data(filename, entity2id, relation2id, is_unweigted=False, directed=Tru
             data.append(relation2id[relation])
 
     print("number of unique_entities ->", len(unique_entities))
-    return triples_data, (rows, cols, data), list(unique_entities)
+    return triples_data, (rows, cols, data), list(unique_entities), list(unique_relations)
 
 
 def build_data(path='./data/WN18RR/', is_unweigted=False, directed=True):
@@ -91,11 +93,11 @@ def build_data(path='./data/WN18RR/', is_unweigted=False, directed=True):
 
     # Adjacency matrix only required for training phase
     # Currenlty creating as unweighted, undirected
-    train_triples, train_adjacency_mat, unique_entities_train = load_data(os.path.join(
+    train_triples, train_adjacency_mat, unique_entities_train, unique_relations_train = load_data(os.path.join(
         path, 'train.txt'), entity2id, relation2id, is_unweigted, directed)
-    validation_triples, valid_adjacency_mat, unique_entities_validation = load_data(
+    validation_triples, valid_adjacency_mat, unique_entities_validation, unique_relations_validation = load_data(
         os.path.join(path, 'valid.txt'), entity2id, relation2id, is_unweigted, directed)
-    test_triples, test_adjacency_mat, unique_entities_test = load_data(os.path.join(
+    test_triples, test_adjacency_mat, unique_entities_test, unique_relations_test = load_data(os.path.join(
         path, 'test.txt'), entity2id, relation2id, is_unweigted, directed)
     #print(entity2id)
     #print(relation2id)
@@ -140,4 +142,4 @@ def build_data(path='./data/WN18RR/', is_unweigted=False, directed=True):
             (right_entity_avg[i] + left_entity_avg[i])
 
     return (train_triples, train_adjacency_mat), (validation_triples, valid_adjacency_mat), (test_triples, test_adjacency_mat), \
-        entity2id, relation2id, id2entity, id2relation, headTailSelector, unique_entities_train
+        entity2id, relation2id, id2entity, id2relation, headTailSelector, unique_entities_train, unique_relations_train
