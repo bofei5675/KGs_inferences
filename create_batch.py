@@ -8,16 +8,11 @@ import random
 from torch.nn.functional import softmax
 
 from sklearn.metrics import accuracy_score, average_precision_score, f1_score, roc_auc_score
-<<<<<<< HEAD
-from sklearn.preprocessing import label_binarize
 import time
 import os
-=======
 from sklearn.preprocessing import label_binarize, normalize
 from scipy.special import softmax
 
-
->>>>>>> c5fceee391c46de8c5c33bbe2ea479b58eb9bba2
 class Corpus:
     def __init__(self, args, train_data, validation_data, test_data, entity2id,
                  relation2id, headTailSelector, batch_size, valid_to_invalid_samples_ratio, unique_entities_train,
@@ -372,11 +367,7 @@ class Corpus:
         average_hits_at_one_head, average_hits_at_one_tail = [], []
         average_mean_rank_head, average_mean_rank_tail = [], []
         average_mean_recip_rank_head, average_mean_recip_rank_tail = [], []
-<<<<<<< HEAD
         log=open(args.output_folder + 'eval.txt', 'w+')
-=======
-        log = open(args.output_folder + 'eval.txt', 'w')
->>>>>>> c5fceee391c46de8c5c33bbe2ea479b58eb9bba2
         for iters in range(1):
             start_time = time.time()
 
@@ -689,12 +680,8 @@ class Corpus:
                 last_index = []  # array of already existing triples
                 for tmp_index in range(len(new_x_batch)):
                     temp_triple = (new_x_batch[tmp_index][0], new_x_batch[tmp_index][1],
-<<<<<<< HEAD
                                         new_x_batch[tmp_index][2])
                     # remove invalid
-=======
-                                   new_x_batch[tmp_index][2])
->>>>>>> c5fceee391c46de8c5c33bbe2ea479b58eb9bba2
                     if temp_triple in self.valid_triples_dict.keys():
                         last_index.append(tmp_index)
 
@@ -710,20 +697,15 @@ class Corpus:
                 import math
                 # Have to do this, because it doesn't fit in memory
                 scores = model.batch_test(new_x_batch)
-<<<<<<< HEAD
                 batch_values = np.zeros((new_x_batch.shape[0], new_x_batch.shape[1] + 2))
                 batch_values[:, :-2] = new_x_batch
                 batch_values[:, -2] = scores.cpu().detach().numpy().reshape(1, -1)
                 batch_values[:, -1] = [1] + [0] * (new_x_batch.shape[0] - 1) # give label
                 dataset.append(batch_values)
-                softmax_scores = softmax(scores, dim=0).transpose(0,1).cpu().detach().numpy()
-=======
                 softmax_scores = (scores).transpose(0, 1).cpu().detach().numpy()
                 # TODO: calculate prob based on score and assign score to those valid triples in last_index
                 # softmax_scores = normalize(softmax_scores)
                 softmax_scores = softmax(softmax_scores)
-
->>>>>>> c5fceee391c46de8c5c33bbe2ea479b58eb9bba2
                 if len(new_x_batch) < 30:
                     for ele in last_index:
                         if ele != batch_indices[i][1]:
@@ -737,8 +719,6 @@ class Corpus:
                 ranks.append(
                     np.where(sorted_indices.cpu().detach().numpy() == 0)[0][0] + 1)
                 reciprocal_ranks.append(1.0 / ranks[-1])
-
-<<<<<<< HEAD
                 # avoid slowdown computation
                 if len(dataset) == 500:
                     dataset = np.vstack(dataset)
@@ -748,8 +728,6 @@ class Corpus:
                     dataset = []
 
 
-=======
->>>>>>> c5fceee391c46de8c5c33bbe2ea479b58eb9bba2
             for i in range(len(ranks)):
                 if ranks[i] <= 100:
                     hits_at_100 = hits_at_100 + 1
