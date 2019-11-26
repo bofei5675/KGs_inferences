@@ -457,6 +457,7 @@ def evaluate_conv(args, unique_entities):
     model_conv.eval()
     with torch.no_grad():
         if isinstance(model_conv, nn.DataParallel):
+            ### original code is get_validation_pred
             Corpus_.get_validation_pred_relation(args, model_conv.module, unique_entities)
         else:
             Corpus_.get_validation_pred_relation(args, model_conv, unique_entities)

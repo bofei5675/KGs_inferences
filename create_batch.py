@@ -8,12 +8,20 @@ import random
 from torch.nn.functional import softmax
 
 from sklearn.metrics import accuracy_score, average_precision_score, f1_score, roc_auc_score
+<<<<<<< HEAD
 from sklearn.preprocessing import label_binarize
 import time
 import os
+=======
+from sklearn.preprocessing import label_binarize, normalize
+from scipy.special import softmax
+
+
+>>>>>>> c5fceee391c46de8c5c33bbe2ea479b58eb9bba2
 class Corpus:
     def __init__(self, args, train_data, validation_data, test_data, entity2id,
-                 relation2id, headTailSelector, batch_size, valid_to_invalid_samples_ratio, unique_entities_train, unique_relations_train, get_2hop=False):
+                 relation2id, headTailSelector, batch_size, valid_to_invalid_samples_ratio, unique_entities_train,
+                 unique_relations_train, get_2hop=False):
         self.train_triples = train_data[0]
 
         # Converting to sparse tensor
@@ -36,14 +44,14 @@ class Corpus:
         # ratio of valid to invalid samples per batch for training ConvKB Model
         self.invalid_valid_ratio = int(valid_to_invalid_samples_ratio)
 
-        if(get_2hop):
+        if (get_2hop):
             self.graph = self.get_graph()
             self.node_neighbors_2hop = self.get_further_neighbors()
 
         self.unique_entities_train = [self.entity2id[i]
                                       for i in unique_entities_train]
         self.unique_relations_train = [self.relation2id[i]
-                                      for i in unique_relations_train]
+                                       for i in unique_relations_train]
 
         self.train_indices = np.array(
             list(self.train_triples)).astype(np.int32)
@@ -62,8 +70,9 @@ class Corpus:
 
         self.valid_triples_dict = {j: i for i, j in enumerate(
             self.train_triples + self.validation_triples + self.test_triples)}
-        print("Total triples count {}, training triples {}, validation_triples {}, test_triples {}".format(len(self.valid_triples_dict), len(self.train_indices),
-                                                                                                           len(self.validation_indices), len(self.test_indices)))
+        print("Total triples count {}, training triples {}, validation_triples {}, test_triples {}".format(
+            len(self.valid_triples_dict), len(self.train_indices),
+            len(self.validation_indices), len(self.test_indices)))
 
         # For training purpose
         self.batch_indices = np.empty(
@@ -82,9 +91,9 @@ class Corpus:
                             self.batch_size * (iter_num + 1))
 
             self.batch_indices[:self.batch_size,
-                               :] = self.train_indices[indices, :]
+            :] = self.train_indices[indices, :]
             self.batch_values[:self.batch_size,
-                              :] = self.train_values[indices, :]
+            :] = self.train_values[indices, :]
 
             last_index = self.batch_size
 
@@ -113,10 +122,11 @@ class Corpus:
 
                     for j in range(self.invalid_valid_ratio // 2):
                         current_index = last_index * \
-                            (self.invalid_valid_ratio // 2) + \
-                            (i * (self.invalid_valid_ratio // 2) + j)
+                                        (self.invalid_valid_ratio // 2) + \
+                                        (i * (self.invalid_valid_ratio // 2) + j)
 
-                        while (self.batch_indices[last_index + current_index, 0], self.batch_indices[last_index + current_index, 1],
+                        while (self.batch_indices[last_index + current_index, 0],
+                               self.batch_indices[last_index + current_index, 1],
                                random_entities[current_index]) in self.valid_triples_dict.keys():
                             random_entities[current_index] = np.random.randint(
                                 0, len(self.entity2id))
@@ -130,7 +140,7 @@ class Corpus:
 
         else:
             last_iter_size = len(self.train_indices) - \
-                self.batch_size * iter_num
+                             self.batch_size * iter_num
             self.batch_indices = np.empty(
                 (last_iter_size * (self.invalid_valid_ratio + 1), 3)).astype(np.int32)
             self.batch_values = np.empty(
@@ -139,9 +149,9 @@ class Corpus:
             indices = range(self.batch_size * iter_num,
                             len(self.train_indices))
             self.batch_indices[:last_iter_size,
-                               :] = self.train_indices[indices, :]
+            :] = self.train_indices[indices, :]
             self.batch_values[:last_iter_size,
-                              :] = self.train_values[indices, :]
+            :] = self.train_values[indices, :]
 
             last_index = last_iter_size
 
@@ -170,10 +180,11 @@ class Corpus:
 
                     for j in range(self.invalid_valid_ratio // 2):
                         current_index = last_index * \
-                            (self.invalid_valid_ratio // 2) + \
-                            (i * (self.invalid_valid_ratio // 2) + j)
+                                        (self.invalid_valid_ratio // 2) + \
+                                        (i * (self.invalid_valid_ratio // 2) + j)
 
-                        while (self.batch_indices[last_index + current_index, 0], self.batch_indices[last_index + current_index, 1],
+                        while (self.batch_indices[last_index + current_index, 0],
+                               self.batch_indices[last_index + current_index, 1],
                                random_entities[current_index]) in self.valid_triples_dict.keys():
                             random_entities[current_index] = np.random.randint(
                                 0, len(self.entity2id))
@@ -194,9 +205,9 @@ class Corpus:
         indices = random.sample(range(len(current_batch_indices)), batch_size)
 
         self.batch_indices[:batch_size,
-                           :] = current_batch_indices[indices, :]
+        :] = current_batch_indices[indices, :]
         self.batch_values[:batch_size,
-                          :] = np.ones((batch_size, 1))
+        :] = np.ones((batch_size, 1))
 
         last_index = batch_size
 
@@ -221,8 +232,8 @@ class Corpus:
 
                 for j in range(self.invalid_valid_ratio // 2):
                     current_index = last_index * \
-                        (self.invalid_valid_ratio // 2) + \
-                        (i * (self.invalid_valid_ratio // 2) + j)
+                                    (self.invalid_valid_ratio // 2) + \
+                                    (i * (self.invalid_valid_ratio // 2) + j)
 
                     self.batch_indices[last_index + current_index,
                                        3] = random_entities[current_index]
@@ -242,7 +253,7 @@ class Corpus:
             target = data[0].data.item()
             value = data[2].data.item()
 
-            if(source not in graph.keys()):
+            if (source not in graph.keys()):
                 graph[source] = {}
                 graph[source][target] = value
             else:
@@ -263,11 +274,11 @@ class Corpus:
         q = queue.Queue()
         q.put((source, -1))
 
-        while(not q.empty()):
+        while (not q.empty()):
             top = q.get()
             if top[0] in graph.keys():
                 for target in graph[top[0]].keys():
-                    if(target in visit.keys()):
+                    if (target in visit.keys()):
                         continue
                     else:
                         q.put((target, graph[top[0]][target]))
@@ -284,18 +295,18 @@ class Corpus:
 
         neighbors = {}
         for target in visit.keys():
-            if(distance[target] != nbd_size):
+            if (distance[target] != nbd_size):
                 continue
             edges = [-1, parent[target][1]]
             relations = []
             entities = [target]
             temp = target
-            while(parent[temp] != (-1, -1)):
+            while (parent[temp] != (-1, -1)):
                 relations.append(parent[temp][1])
                 entities.append(parent[temp][0])
                 temp = parent[temp][0]
 
-            if(distance[target] in neighbors.keys()):
+            if (distance[target] in neighbors.keys()):
                 neighbors[distance[target]].append(
                     (tuple(relations), tuple(entities[:-1])))
             else:
@@ -312,8 +323,8 @@ class Corpus:
             # st_time = time.time()
             temp_neighbors = self.bfs(self.graph, source, nbd_size)
             for distance in temp_neighbors.keys():
-                if(source in neighbors.keys()):
-                    if(distance in neighbors[source].keys()):
+                if (source in neighbors.keys()):
+                    if (distance in neighbors[source].keys()):
                         neighbors[source][distance].append(
                             temp_neighbors[distance])
                     else:
@@ -337,7 +348,7 @@ class Corpus:
                 nhop_list = node_neighbors[source][nbd_size]
 
                 for i, tup in enumerate(nhop_list):
-                    if(args.partial_2hop and i >= 1):
+                    if (args.partial_2hop and i >= 1):
                         break
 
                     count += 1
@@ -345,7 +356,6 @@ class Corpus:
                                                  nhop_list[i][1][0]])
 
         return np.array(batch_source_triples).astype(np.int32)
-
 
     def transe_scoring(self, batch_inputs, entity_embeddings, relation_embeddings):
         source_embeds = entity_embeddings[batch_inputs[:, 0]]
@@ -362,7 +372,11 @@ class Corpus:
         average_hits_at_one_head, average_hits_at_one_tail = [], []
         average_mean_rank_head, average_mean_rank_tail = [], []
         average_mean_recip_rank_head, average_mean_recip_rank_tail = [], []
+<<<<<<< HEAD
         log=open(args.output_folder + 'eval.txt', 'w+')
+=======
+        log = open(args.output_folder + 'eval.txt', 'w')
+>>>>>>> c5fceee391c46de8c5c33bbe2ea479b58eb9bba2
         for iters in range(1):
             start_time = time.time()
 
@@ -387,7 +401,7 @@ class Corpus:
                 new_x_batch_tail = np.tile(
                     batch_indices[i, :], (len(self.entity2id), 1))
 
-                if(batch_indices[i, 0] not in unique_entities or batch_indices[i, 2] not in unique_entities):
+                if (batch_indices[i, 0] not in unique_entities or batch_indices[i, 2] not in unique_entities):
                     continue
 
                 new_x_batch_head[:, 0] = entity_list
@@ -450,7 +464,7 @@ class Corpus:
 
                     scores_head = torch.cat(
                         [scores1_head, scores2_head, scores3_head, scores4_head], dim=0)
-                    #scores5_head, scores6_head, scores7_head, scores8_head,
+                    # scores5_head, scores6_head, scores7_head, scores8_head,
                     # cores9_head, scores10_head], dim=0)
                 else:
                     scores_head = model.batch_test(new_x_batch_head)
@@ -667,7 +681,7 @@ class Corpus:
                 new_x_batch = np.tile(
                     batch_indices[i, :], (len(self.relation2id), 1))
 
-                if(batch_indices[i, 1] not in unique_relations):
+                if (batch_indices[i, 1] not in unique_relations):
                     continue
 
                 new_x_batch[:, 1] = relation_list
@@ -675,8 +689,12 @@ class Corpus:
                 last_index = []  # array of already existing triples
                 for tmp_index in range(len(new_x_batch)):
                     temp_triple = (new_x_batch[tmp_index][0], new_x_batch[tmp_index][1],
+<<<<<<< HEAD
                                         new_x_batch[tmp_index][2])
                     # remove invalid
+=======
+                                   new_x_batch[tmp_index][2])
+>>>>>>> c5fceee391c46de8c5c33bbe2ea479b58eb9bba2
                     if temp_triple in self.valid_triples_dict.keys():
                         last_index.append(tmp_index)
 
@@ -686,24 +704,31 @@ class Corpus:
                 new_x_batch = np.delete(
                     new_x_batch, last_index, axis=0)
 
-
                 # adding the current valid triples to the top, i.e, index 0
                 new_x_batch = np.insert(
                     new_x_batch, 0, batch_indices[i], axis=0)
                 import math
                 # Have to do this, because it doesn't fit in memory
                 scores = model.batch_test(new_x_batch)
+<<<<<<< HEAD
                 batch_values = np.zeros((new_x_batch.shape[0], new_x_batch.shape[1] + 2))
                 batch_values[:, :-2] = new_x_batch
                 batch_values[:, -2] = scores.cpu().detach().numpy().reshape(1, -1)
                 batch_values[:, -1] = [1] + [0] * (new_x_batch.shape[0] - 1) # give label
                 dataset.append(batch_values)
                 softmax_scores = softmax(scores, dim=0).transpose(0,1).cpu().detach().numpy()
+=======
+                softmax_scores = (scores).transpose(0, 1).cpu().detach().numpy()
+                # TODO: calculate prob based on score and assign score to those valid triples in last_index
+                # softmax_scores = normalize(softmax_scores)
+                softmax_scores = softmax(softmax_scores)
+
+>>>>>>> c5fceee391c46de8c5c33bbe2ea479b58eb9bba2
                 if len(new_x_batch) < 30:
-                    for ele in last_index :
+                    for ele in last_index:
                         if ele != batch_indices[i][1]:
                             softmax_scores = np.insert(
-                        softmax_scores, ele, np.mean(softmax_scores[0][1:]), axis=1)
+                                softmax_scores, ele, np.mean(softmax_scores[0][1:]), axis=1)
                 y_predict.append(softmax_scores)
 
                 sorted_scores, sorted_indices = torch.sort(
@@ -713,6 +738,7 @@ class Corpus:
                     np.where(sorted_indices.cpu().detach().numpy() == 0)[0][0] + 1)
                 reciprocal_ranks.append(1.0 / ranks[-1])
 
+<<<<<<< HEAD
                 # avoid slowdown computation
                 if len(dataset) == 500:
                     dataset = np.vstack(dataset)
@@ -722,6 +748,8 @@ class Corpus:
                     dataset = []
 
 
+=======
+>>>>>>> c5fceee391c46de8c5c33bbe2ea479b58eb9bba2
             for i in range(len(ranks)):
                 if ranks[i] <= 100:
                     hits_at_100 = hits_at_100 + 1
@@ -786,5 +814,3 @@ class Corpus:
         print('#' * 9 + ' Link Prediction Performance ' + '#' * 9, file=log)
         print(f'AUC-ROC: {auc_roc:.3f}, AUC-PR: {auc_pr:.3f}', file=log)
         print('#' * 50, file=log)
-
-
