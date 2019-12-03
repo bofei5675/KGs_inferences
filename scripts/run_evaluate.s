@@ -8,6 +8,8 @@
 
 source activate capstone
 cd ../
-python evaluate.py --data ./data/drugbank_100_new/ \
---output_folder /scratch/bz1030/relationPrediction/checkpoints/drugbank100_new/
+python evaluate.py --data ./data/deepddi/ \
+--output_folder /scratch/bz1030/relationPrediction/checkpoints/deepddi/ \
+--tanh no
+
 

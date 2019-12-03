@@ -226,10 +226,10 @@ def train_gat(args):
     if CUDA:
         model_gat.cuda()
 
-    if (args.load_gat is None):
+    if args.load_gat is not None and args.epochs_gat == 0:
         model_gat.load_state_dict(torch.load(
             '{0}gat/trained_{1}.pth'.format(args.output_folder, args.epochs_gat - 1)))
-    elif (args.load_gat is not None and args.epochs_gat > 0):
+    elif args.load_gat is not None and args.epochs_gat > 0:
         model_gat.load_state_dict(torch.load(args.load_gat))
 
     optimizer = torch.optim.Adam(

@@ -646,7 +646,7 @@ class Corpus:
         log = open(args.output_folder + 'relation_eval.txt', 'w+')
         y_true = self.test_indices[:, 1]
         y_predict = []
-        if not os.path.exists(args.output_folder):
+        if not os.path.exists(args.output_folder + 'output_scores/'):
             os.makedirs(args.output_folder + 'output_scores/')
 
         for iters in range(1):
@@ -702,19 +702,18 @@ class Corpus:
                 batch_values[:, -2] = scores.cpu().detach().numpy().reshape(1, -1)
                 batch_values[:, -1] = [1] + [0] * (new_x_batch.shape[0] - 1) # give label
                 dataset.append(batch_values)
-                softmax_scores = (scores).transpose(0, 1).cpu().detach().numpy()
+                # softmax_scores = (scores).transpose(0, 1).cpu().detach().numpy()
                 # TODO: calculate prob based on score and assign score to those valid triples in last_index
                 # softmax_scores = normalize(softmax_scores)
-                softmax_scores = softmax(softmax_scores)
-                if len(new_x_batch) < 30:
-                    for ele in last_index:
-                        if ele != batch_indices[i][1]:
-                            softmax_scores = np.insert(
-                                softmax_scores, ele, np.mean(softmax_scores[0][1:]), axis=1)
-                y_predict.append(softmax_scores)
+                #softmax_scores = softmax(softmax_scores)
+                #if len(new_x_batch) < 30:
+                #    for ele in last_index:
+                #        if ele != batch_indices[i][1]:
+                #            softmax_scores = np.insert(
+                #                softmax_scores, ele, np.mean(softmax_scores[0][1:]), axis=1)
+                #y_predict.append(softmax_scores)
 
-                sorted_scores, sorted_indices = torch.sort(
-                    scores.view(-1), dim=-1, descending=True)
+                sorted_scores, sorted_indices = torch.sort(scores.view(-1), dim=-1, descending=True)
                 # Just search for zeroth index in the sorted scores, we appended valid triple at top
                 ranks.append(
                     np.where(sorted_indices.cpu().detach().numpy() == 0)[0][0] + 1)
@@ -780,8 +779,8 @@ class Corpus:
             sum(average_mean_ranks) / len(average_mean_ranks)), file=log)
         print("Mean Reciprocal Rank {}".format(
             sum(average_mean_recip_ranks) / len(average_mean_recip_ranks)), file=log)
-
-        y_predict = np.vstack(y_predict)
+        '''
+        #y_predict = np.vstack(y_predict)
         y_true = label_binarize(y_true, classes=unique_relations)
         drop_idx = np.where(np.sum(y_true, axis=0) == 0)
         y_true = np.delete(y_true, drop_idx, axis=1)
@@ -792,3 +791,4 @@ class Corpus:
         print('#' * 9 + ' Link Prediction Performance ' + '#' * 9, file=log)
         print(f'AUC-ROC: {auc_roc:.3f}, AUC-PR: {auc_pr:.3f}', file=log)
         print('#' * 50, file=log)
+        '''

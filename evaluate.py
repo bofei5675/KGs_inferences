@@ -67,7 +67,7 @@ def parse_args():
     args.add_argument("-out_dim", "--entity_out_dim", type=int, nargs='+',
                       default=[100, 200], help="Entity output embedding dimensions")
     args.add_argument("-h_gat", "--nheads_GAT", type=int, nargs='+',
-                      default=[2, 2], help="Multihead attention SpGAT")
+                      default=[1, 2], help="Multihead attention SpGAT")
     args.add_argument("-margin", "--margin", type=float,
                       default=5, help="Margin used in hinge loss")
 
@@ -82,6 +82,7 @@ def parse_args():
                       help="Number of output channels in conv layer")
     args.add_argument("-drop_conv", "--drop_conv", type=float,
                       default=0.0, help="Dropout probability for convolution layer")
+    args.add_argument("-tanh", "--tanh", type=str2bool, default='yes', dest='tanh')
 
     args = args.parse_args()
     return args
@@ -142,5 +143,5 @@ def evaluate_conv(args, unique_entities,load_model):
 if __name__ == '__main__':
     Corpus_, entity_embeddings, relation_embeddings = load_data(args)
     print('Load model ...')
-    load_model = '/scratch/bz1030/relationPrediction/checkpoints/drugbank100_new/conv/trained_99.pth'
+    load_model = '/scratch/bz1030/relationPrediction/checkpoints/deepddi_pretrained/conv/trained_299.pth'
     evaluate_conv(args, Corpus_.unique_entities_train, load_model)
