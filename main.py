@@ -5,8 +5,6 @@ from torch.autograd import Variable
 import torch.nn as nn
 import torch.nn.functional as F
 import numpy as np
-#import matplotlib.pyplot as plt
-#from matplotlib.lines import Line2D
 from copy import deepcopy
 
 from preprocess import read_entity_from_id, read_relation_from_id, init_embeddings, build_data
@@ -20,10 +18,6 @@ import sys
 import logging
 import time
 import pickle
-from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import accuracy_score, average_precision_score, f1_score, roc_auc_score
-from sklearn.multiclass import OneVsRestClassifier
-from sklearn.preprocessing import MultiLabelBinarizer
 from tools import save_mbeddings
 
 seed = 141

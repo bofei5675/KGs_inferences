@@ -62,5 +62,5 @@ def eval_multiclass(scores_dir):
         f'total length is {len(y_trues)} \nauc score for roc is {auc_roc_avg} and the auc for pr is {auc_pr_avg}')
 
 
-scores_dir = '/home/yh1844/inference-2019/eval_data_bofei/output_scores'
+scores_dir = '/scratch/bz1030/relationPrediction/checkpoints/deepddi_tanh/output_scores'
 eval_multiclass(scores_dir)

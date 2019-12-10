@@ -732,7 +732,7 @@ class Corpus:
                     hits_at_100 = hits_at_100 + 1
                 if ranks[i] <= 10:
                     hits_at_ten = hits_at_ten + 1
-                if ranks[i] <= 3:
+                if ranks[i] <= 5:
                     hits_at_three = hits_at_three + 1
                 if ranks[i] == 1:
                     hits_at_one = hits_at_one + 1
@@ -745,7 +745,7 @@ class Corpus:
                 hits_at_100 / float(len(ranks))), file=log)
             print("Current iteration Hits@10 are {}".format(
                 hits_at_ten / len(ranks)), file=log)
-            print("Current iteration Hits@3 are {}".format(
+            print("Current iteration Hits@5 are {}".format(
                 hits_at_three / len(ranks)), file=log)
             print("Current iteration Hits@1 are {}".format(
                 hits_at_one / len(ranks)), file=log)
@@ -771,7 +771,7 @@ class Corpus:
             sum(average_hits_at_100) / len(average_hits_at_100)), file=log)
         print("Hits@10 are {}".format(
             sum(average_hits_at_ten) / len(average_hits_at_ten)), file=log)
-        print("Hits@3 are {}".format(
+        print("Hits@5 are {}".format(
             sum(average_hits_at_three) / len(average_hits_at_three)), file=log)
         print("Hits@1 are {}".format(
             sum(average_hits_at_one) / len(average_hits_at_one)), file=log)

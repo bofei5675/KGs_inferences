@@ -143,5 +143,5 @@ def evaluate_conv(args, unique_entities,load_model):
 if __name__ == '__main__':
     Corpus_, entity_embeddings, relation_embeddings = load_data(args)
     print('Load model ...')
-    load_model = '/scratch/bz1030/relationPrediction/checkpoints/deepddi_pretrained/conv/trained_299.pth'
+    load_model = '/scratch/bz1030/relationPrediction/checkpoints/deepddi/conv/trained_299.pth'
     evaluate_conv(args, Corpus_.unique_entities_train, load_model)
