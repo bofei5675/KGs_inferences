@@ -1,4 +1,7 @@
 # Inference Project 
+**Introduction** : This repo is for the final project of NYU DS-1005 Inference and Representations for Bofei Zhang, Yunan Hu, Kaitai Zhang. We adopt Knowledge Base Attention Network (KBAT) on a novel knowledge graph completion task, Drug-Drug Interaction task.
+
+## Pre-processing
 The folder `inferences` contains code that can processed drugbank data and prepared the training, testing data for KBAT training and evaluation. You can run this based on the following order:
 ```python
 # make sure you have the original dataset from here https://www.drugbank.ca/releases/latest
@@ -13,6 +16,16 @@ python create_dataset_kbat.py
 ```
 Move the generated folder to `data`,  then you are ready to go.
 
+## Experiments
+To reproduce the experiment, see the scripts in `scripts/` folder. We ran all experiments on NYU HPC Prince. Below is an example to run an experiment, see `main.py` for details about arguments:
+```
+python main.py python main.py --data ./data/drugbank_1861/ --pretrained_emb False\
+ --output_folder ./checkpoints/drugbank1861_tanh/ \
+ --epochs_gat 1200\
+ --epochs_conv 200\
+ --batch_size_conv 512 --batch_size_gat 80000\
+ --tanh yes
+```
 
 Below are original README file.
 
